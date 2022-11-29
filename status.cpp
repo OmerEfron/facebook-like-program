@@ -14,5 +14,5 @@ Status::Status(char* content, Date date, Time time) : _statusDate(date), _status
 
 Status::~Status()
 {
-	delete _content;
+	delete[] _content;
 }

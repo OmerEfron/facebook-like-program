@@ -8,3 +8,10 @@ void* myrealloc(void* arr, int& logSize, int& physize, int elemSize)
 	delete arr;
 	return newArr;
 }
+
+void swap(void* x, void* y, int elemSize)
+{
+	void* temp = y;
+	y = x;
+	x = temp;
+}

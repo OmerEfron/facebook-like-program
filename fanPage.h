@@ -3,6 +3,8 @@
 #include "status.h"
 #include "member.h"
 
+class Member;
+
 class FanPage {
 private:
 	char* _pageName;
@@ -10,9 +12,14 @@ private:
 	int _numOfFans;
 	int _statusesPhySize;
 	int _fansPhySize;
-	Status** pageStatuses;
-	//Member** pageFans;
-//public:
+	Status** _pageStatuses;
+	Member** _pageFans;
+public:
+	FanPage(char* pageName);
+	~FanPage();
+	void addFan(Member* member);
+	int isFan(Member* fan);
+	void removeFan(Member* member);
 
 };
 #endif // !FAN_PAGE_H

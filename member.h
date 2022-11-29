@@ -6,7 +6,9 @@
 #include "status.h"
 #include "fanPage.h"
 #include "listOfStatus.h"
-const int MAX_NUM_OF_STATUSES = 10;
+const int NOT_FOUND = -1;
+
+class FanPage;
 
 class Member {
 
@@ -22,10 +24,12 @@ private:
 public:
 	Member(char* name, Date birthDay);
 	~Member();
-	void addFriend(Member& friendToAdd);
-	void removeFriend(Member& friendToRemove);
-	void addPage(FanPage& fanPageToAdd);
-	void removePage(FanPage& fanPageToRemove);
+	int isFriend(Member* member);
+	int isFan(FanPage* fanPage);
+	void addFriend(Member* friendToAdd);
+	void removeFriend(Member* friendToRemove);
+	void addPage(FanPage* fanPageToAdd);
+	void removePage(FanPage* fanPageToRemove);
 	void addStatus(Status& statusToAdd);
 	void showAllStatus();
 	void showLatestFriendsStatus();

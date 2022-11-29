@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="facebook.cpp" />
+    <ClCompile Include="fanPage.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="listOfStatus.cpp" />
     <ClCompile Include="main.cpp" />
