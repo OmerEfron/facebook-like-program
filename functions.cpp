@@ -140,8 +140,9 @@ void addNewMember(Facebook& facebook)
 {
 	int day, month, year;
 	char* name;
+	cout << "Please enter the new member's name:\n";
 	name = getString();
-	cout << "Enter: Day Month Year";
+	cout << "Please enter:\nDay Month Year, seperated with white space\n";
 	cin >> day >> month >> year;
 	Member* member = new Member(name, Date(day, month, year));
 	facebook.addMember(*member);
@@ -150,6 +151,7 @@ void addNewMember(Facebook& facebook)
 void addNewFanPage(Facebook& facebook)
 {
 	char* name;
+	cout << "Please enter the new page's name:\n";
 	name = getString();
 
 	FanPage* fanPage = new FanPage(name);
@@ -189,6 +191,7 @@ void addStatusToMember(Facebook& facebook)
 
 void printFanPagesChoices(Facebook& facebook)
 {
+	cout << "Please choose a page:\n";
 	for (int i = 0; i < facebook.getNumOfPages(); i++)
 	{
 		cout << i + 1 << " - " << facebook.getAllFanPages()[i]->getPageName() << "\n";
@@ -197,6 +200,7 @@ void printFanPagesChoices(Facebook& facebook)
 
 void printFriendsChoices(Facebook& facebook)
 {
+	cout << "Please choose a member: \n";
 	for (int i = 0; i < facebook.getNumOfMembers(); i++)
 	{
 		cout << i + 1 << " - " << facebook.getAllMembers()[i]->getName() << "\n";

@@ -4,7 +4,8 @@
 #include "status.h"
 #include "functions.h"
 #include "facebook.h"
-
+#include <iostream>
+using namespace std;
 int main()
 {
 	Facebook facebook;
@@ -34,6 +35,7 @@ int main()
 
 	while (getChoice(facebook))
 	{
+		cout << "\n----------------------\n";
 		continue;
 	}
 }
