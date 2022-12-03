@@ -229,7 +229,7 @@ char* getString()
 void showAllStastusOfPage(Facebook& facebook)
 {
 	int choice;
-	cout << "Please choose one fan page:";
+	cout << "Please choose one fan page:\n";
 	printFanPagesChoices(facebook);
 	cin >> choice;
 	facebook.getAllFanPages()[choice]->showAllStatus();
@@ -238,7 +238,7 @@ void showAllStastusOfPage(Facebook& facebook)
 void showAllStatusOfMember(Facebook& facebook)
 {
 	int choice;
-	cout << "Please choose one member:";
+	cout << "Please choose one member:\n";
 	printFriendsChoices(facebook);
 	cin >> choice;
 	facebook.getAllMembers()[choice - 1]->showAllStatus();
