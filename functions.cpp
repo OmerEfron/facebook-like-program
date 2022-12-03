@@ -44,7 +44,7 @@ void displayMenu()
 		<<"4 - Add status to fan page.\n5 - Show a member statuses.\n6 - Show a fan page statuses\n"
 		<<"7 - Show a member latest 10 statuses.\n8 - Create new friendship between two members.\n"
 		<<"9 - Cancel a friendship between 2 friends\n10 - Add a members as a fan to a fan page.\n"
-		<<"11 - Remove a member from a fan page.\n 12 - Show all members in facebook.\n"
+		<<"11 - Remove a member from a fan page.\n12 - Show all members in facebook.\n"
 		<<"13 - Show a member friends.\n" "14 - Show a fan page fans.\n15 - Exit\n";
 }
 
@@ -227,6 +227,7 @@ char* getString()
 void showAllStastusOfPage(Facebook& facebook)
 {
 	int choice;
+	cout << "Please choose one fan page:";
 	printFanPagesChoices(facebook);
 	cin >> choice;
 	facebook.getAllFanPages()[choice]->showAllStatus();
@@ -235,6 +236,7 @@ void showAllStastusOfPage(Facebook& facebook)
 void showAllStatusOfMember(Facebook& facebook)
 {
 	int choice;
+	cout << "Please choose one member:";
 	printFriendsChoices(facebook);
 	cin >> choice;
 	facebook.getAllMembers()[choice - 1]->showAllStatus();
@@ -242,6 +244,7 @@ void showAllStatusOfMember(Facebook& facebook)
 void showLatestStatusOfFriend(Facebook& facebook)
 {
 	int choice;
+	cout << "Please choose one member:\n";
 	printFriendsChoices(facebook);
 	cin >> choice;
 	facebook.getAllMembers()[choice - 1]->showLatestFriendsStatus();
@@ -250,6 +253,7 @@ void makeFriends(Facebook& facebook)
 {
 	int choice1, choice2;
 	do{
+		cout << "Please choose two members:\n";
 		printFriendsChoices(facebook);
 		cin >> choice1>> choice2;
 	}
@@ -262,6 +266,7 @@ void cancelFriendship(Facebook& facebook)
 {
 	int choice1, choice2;
 	do {
+		cout << "Please choose two members:\n";
 		printFriendsChoices(facebook);
 		cin >> choice1 >> choice2;
 	} while (choice2 == choice1);
@@ -273,9 +278,11 @@ void cancelFriendship(Facebook& facebook)
 void addMemberToPage(Facebook& facebook)
 {
 	int page, member;
+	cout << "Please choose one fan page:\n";
 	printFanPagesChoices(facebook);
 	cin >> page;
 	getchar();
+	cout << "Please choose one fan:\n";
 	printFriendsChoices(facebook);
 	cin >> member;
 	getchar();
@@ -284,22 +291,27 @@ void addMemberToPage(Facebook& facebook)
 void removeMemberFromPage(Facebook& facebook)
 {
 	int page, member;
+	cout << "Please choose one fan page:\n";
 	printFanPagesChoices(facebook);
 	cin >> page;
 	getchar();
+	cout << "Please choose one fan:\n";
 	printFriendsChoices(facebook);
 	cin >> member;
 	facebook.getAllFanPages()[page - 1]->removeFan(facebook.getAllMembers()[member - 1]);
 }
 void showAll(Facebook& facebook)
 {
+	cout << "All the members on facebook:\n";
 	facebook.showMembers();
 	cout << "\n----------------\n";
+	cout << "All the fan pages on facebook:\n";
 	facebook.showPages();
 }
 void showMemberFriends(Facebook& facebook)
 {
 	int choice;
+	cout << "Please choose a one member:\n";
 	printFriendsChoices(facebook);
 	cin >> choice;
 	getchar();
@@ -307,8 +319,8 @@ void showMemberFriends(Facebook& facebook)
 }
 void showPageFans(Facebook& facebook)
 {
-
 	int choice;
+	cout << "Please choose one fan page:\n";
 	printFanPagesChoices(facebook);
 	cin >> choice;
 	getchar();
