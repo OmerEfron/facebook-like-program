@@ -191,7 +191,6 @@ void addStatusToMember(Facebook& facebook)
 
 void printFanPagesChoices(Facebook& facebook)
 {
-	cout << "Please choose a page:\n";
 	for (int i = 0; i < facebook.getNumOfPages(); i++)
 	{
 		cout << i + 1 << " - " << facebook.getAllFanPages()[i]->getPageName() << "\n";
@@ -200,7 +199,6 @@ void printFanPagesChoices(Facebook& facebook)
 
 void printFriendsChoices(Facebook& facebook)
 {
-	cout << "Please choose a member: \n";
 	for (int i = 0; i < facebook.getNumOfMembers(); i++)
 	{
 		cout << i + 1 << " - " << facebook.getAllMembers()[i]->getName() << "\n";
