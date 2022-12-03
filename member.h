@@ -37,8 +37,10 @@ public:
 	const Status** getStatuses() const;
 	const char* getName() const;
 	void showAllStatus() const;
-	void showAllFanpages();
-	void showAllFriends();
+	void showAllFanpages(bool withIndex);
+	void showAllFriends(bool withIndex);
 	void showLatestFriendsStatus();
+	int getNumOfMembers();
+	Member** const getAllMembers();
 };
 #endif // !MEMBER_H

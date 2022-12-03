@@ -21,8 +21,11 @@ public:
 	void addFan(Member* member);
 	int isFan(Member* fan);
 	void removeFan(Member* member);
-	void showAllFans();
+	void showAllFans(bool withIndex);
 	void showAllStatus();
 	void addStatus(Status&);
+	int getNumOfFans();
+	Member** const getPageFans();
+
 };
 #endif // !FAN_PAGE_H

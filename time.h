@@ -10,7 +10,7 @@ public:
 	Time(int h, int m);
 	int getHours();
 	int getMinutes();
-	void showHour();
+	void showHour() const;
 
 };
 #endif // !TIME_H

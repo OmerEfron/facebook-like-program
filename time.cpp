@@ -16,7 +16,7 @@ int Time::getMinutes()
 	return minutes;
 }
 
-void Time::showHour()
+void Time::showHour() const
 {
 	cout << hour << ":" << minutes;
 }

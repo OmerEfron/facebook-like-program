@@ -36,4 +36,6 @@ void removeMemberFromPage(Facebook& facebook);
 void showAll(Facebook& facebook);
 void showMemberFriends(Facebook& facebook);
 void showPageFans(Facebook& facebook);
+int checkInputMembers(Facebook& facebook);
+int checkInputFanPages(Facebook& facebook);
 #endif // !FUNCTIONS_H

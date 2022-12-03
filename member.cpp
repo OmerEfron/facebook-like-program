@@ -128,19 +128,27 @@ const char* Member:: getMemberName()
 	return _memberName;
 }
 
-void Member::showAllFriends()
+void Member::showAllFriends(bool withIndex)
 {
+	if (withIndex) {
 	for (int i = 0; i < _numOfFriends; i++)
-	{
-		cout << _memberFriends[i]->getMemberName()<<"\n";
+		cout <<i+1<<". "<< _memberFriends[i]->getMemberName() << "\n";
+	}
+	else {
+		for (int i = 0; i < _numOfFriends; i++)
+			cout << _memberFriends[i]->getMemberName() << "\n";
 	}
 }
 
-void Member::showAllFanpages()
+void Member::showAllFanpages(bool withIndex)
 {
-	for (int i = 0; i < _numOfFanPages; i++)
-	{
-		cout << _memberFanPages[i]->getPageName()<<"\n";
+	if (withIndex){
+		for (int i = 0; i < _numOfFanPages; i++)
+			cout << i+1 << ". " << _memberFanPages[i]->getPageName() << "\n";
+	}
+	else{
+		for (int i = 0; i < _numOfFanPages; i++)
+			cout << _memberFanPages[i]->getPageName() << "\n";
 	}
 }
 
@@ -170,4 +178,14 @@ void Member::showLatestFriendsStatus()
 const char* Member:: getName() const
 {
 	return _memberName;
+}
+
+int Member::getNumOfMembers()
+{
+	return _numOfFriends;
+}
+
+Member** const Member::getAllMembers()
+{
+	return _memberFriends;
 }

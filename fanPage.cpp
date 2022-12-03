@@ -74,12 +74,18 @@ void FanPage::removeFan(Member* fan)
 }
 
 // shows all of the fans of the page.
-void FanPage::showAllFans()
+void FanPage::showAllFans(bool withIndex)
 {
 	cout << _pageName << " fans: \n";
-	for (int i = 0; i < _numOfFans; i++)
+	if (withIndex)
 	{
-		cout << _pageFans[i]->getMemberName() << "\n";
+		for (int i = 0; i < _numOfFans; i++)
+			cout <<i+1<<". "<< _pageFans[i]->getMemberName() << "\n";
+	}
+	else {
+		for (int i = 0; i < _numOfFans; i++)
+			cout << _pageFans[i]->getMemberName() << "\n";
+		
 	}
 }
 
@@ -96,4 +102,14 @@ void FanPage::showAllStatus()
 const char* FanPage:: getPageName()
 {
 	return _pageName;
+}
+
+int FanPage:: getNumOfFans()
+{
+	return _numOfFans;
+}
+
+Member** const FanPage::getPageFans() 
+{
+	return _pageFans;
 }

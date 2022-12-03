@@ -20,5 +20,7 @@ Status::~Status()
 void Status:: showStatus() const
 {
 	_statusDate.showDate();
+	cout << "\n";
+	_statusTime.showHour();
 	cout << "\n"<< _content;
 }
