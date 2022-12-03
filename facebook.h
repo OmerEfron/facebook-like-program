@@ -19,13 +19,15 @@ public:
 	~Facebook();
 	int getNumOfMembers() const;
 	int getNumOfPages() const;
-	void addMember(Member& newMember);
-	void addPage(FanPage& newPage);
+	bool addMember(Member& newMember);
+	bool addPage(FanPage& newPage);
 	void showMembers() const;
 	void showPages() const;
 	Member ** const getAllMembers();
 	FanPage** const getAllFanPages();
-
+	bool isNameMemberUsed(Member& member);
+	bool isNameFanPageUsed(FanPage& fanPage);
 
 };
 #endif // !FACEBOOK_H
+

@@ -28,27 +28,37 @@ int Facebook::getNumOfPages() const
 }
 
 // gets a ref to Member and adds it to facebook
-void Facebook::addMember(Member& newMember)
+bool Facebook::addMember(Member& newMember)
 {
-	if (_numOfMembers == _membersPhySize)
+	if (!isNameMemberUsed(newMember))
 	{
-		_membersPhySize *= 2;
-		_members = (Member**)reallocArr(_members, _numOfMembers, _membersPhySize, sizeof(Member*));
+		if (_numOfMembers == _membersPhySize)
+		{
+			_membersPhySize *= 2;
+			_members = (Member**)reallocArr(_members, _numOfMembers, _membersPhySize, sizeof(Member*));
+		}
+		_members[_numOfMembers] = &newMember;
+		_numOfMembers++;
+		return true;
 	}
-	_members[_numOfMembers] = &newMember;
-	_numOfMembers++;
+	return false;
 }
 
 // gets a ref to FanPage and adds it to facebook
-void Facebook::addPage(FanPage& newPage)
+bool Facebook::addPage(FanPage& newPage)
 {
-	if (_numOfPages == _pagesPhySize)
+	if (!isNameFanPageUsed(newPage))
 	{
-		_pagesPhySize *= 2;
-		_fanPages = (FanPage**)reallocArr(_fanPages, _numOfPages, _pagesPhySize, sizeof(FanPage*));
+		if (_numOfPages == _pagesPhySize)
+		{
+			_pagesPhySize *= 2;
+			_fanPages = (FanPage**)reallocArr(_fanPages, _numOfPages, _pagesPhySize, sizeof(FanPage*));
+		}
+		_fanPages[_numOfPages] = &newPage;
+		_numOfPages++;
+		return true;
 	}
-	_fanPages[_numOfPages] = &newPage;
-	_numOfPages++;
+	return false;
 }
 
 // shows all members in facebook.
@@ -80,4 +90,23 @@ Member** const Facebook::getAllMembers()
 FanPage** const Facebook::getAllFanPages()
 {
 	return _fanPages;
+}
+
+bool Facebook::isNameMemberUsed(Member& member)
+{
+	for (int i = 0; i < _numOfMembers; i++)
+	{
+		if (strcmp(member.getName(), _members[i]->getName()) == 0)
+			return true;
+	}
+	return false;
+}
+bool Facebook::isNameFanPageUsed(FanPage& fanPage)
+{
+	for (int i = 0; i < _numOfPages; i++)
+	{
+		if (strcmp(fanPage.getPageName(), _fanPages[i]->getPageName()) == 0)
+			return true;
+	}
+	return false;
 }

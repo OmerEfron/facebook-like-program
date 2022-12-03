@@ -154,7 +154,9 @@ void addNewMember(Facebook& facebook)
 	cout << "Please enter:\nDay Month Year, seperated with white space\n";
 	cin >> day >> month >> year;
 	Member* member = new Member(name, Date(day, month, year));
-	facebook.addMember(*member);
+	if (!facebook.addMember(*member))
+		delete member;
+
 }
 
 // adds a new page to facebook. 
@@ -167,7 +169,8 @@ void addNewFanPage(Facebook& facebook)
 	name = getString();
 
 	FanPage* fanPage = new FanPage(name);
-	facebook.addPage(*fanPage);
+	if (!facebook.addPage(*fanPage))
+		delete fanPage;
 }
 
 // adds a new status to page. 
