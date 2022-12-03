@@ -23,8 +23,8 @@ public:
 	void addPage(FanPage& newPage);
 	void showMembers() const;
 	void showPages() const;
-	Member ** getAllMembers();
-	FanPage** getAllFanPages();
+	Member ** const getAllMembers();
+	FanPage** const getAllFanPages();
 
 
 };

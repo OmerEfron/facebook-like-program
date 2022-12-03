@@ -19,7 +19,10 @@
 #define EXIT 15
 using namespace std;
 
-void* myrealloc(void* arr, int& logSize, int& physize, int elemSize)
+
+// reallocate the arr, from any type, with a size of the given phySize.
+//copies the first logSize elements to the new arr and free the old one.
+void* reallocArr(void* arr, int logSize, int physize, int elemSize)
 {
 	void* newArr;
 	newArr = new unsigned char[elemSize * physize];
@@ -28,6 +31,7 @@ void* myrealloc(void* arr, int& logSize, int& physize, int elemSize)
 	return newArr;
 }
 
+// swap adresses between 2 elements from same type.
 void swap1(void* x, void* y, int elemSize)
 {
 	void* temp = malloc(elemSize);
@@ -37,9 +41,10 @@ void swap1(void* x, void* y, int elemSize)
 	free(temp);
 }
 
+// display the system menu.
 void displayMenu()
 {
-	cout << "Welcome to FACEBOOK\n-------------\nPlease choose one of the following:\n"
+	cout << "Welcome to FACEBOOK\n----------------------\nPlease choose one of the following:\n"
 		<< "1 - Add new member.\n2 - Add new fan page.\n3 - Add status to member.\n"
 		<<"4 - Add status to fan page.\n5 - Show a member statuses.\n6 - Show a fan page statuses\n"
 		<<"7 - Show a member latest 10 statuses.\n8 - Create new friendship between two members.\n"
@@ -48,6 +53,7 @@ void displayMenu()
 		<<"13 - Show a member friends.\n" "14 - Show a fan page fans.\n15 - Exit\n";
 }
 
+// get the user choice number, and based on it executing his choice.
 bool getChoice(Facebook& facebook)
 {
 	int choice;
@@ -136,6 +142,9 @@ bool getChoice(Facebook& facebook)
 	return true;
 }
 
+// adds a new member to facebook. 
+// gets from user the name and birthdate.
+// if there is already a member in facebook with same name, free the name and the new member.
 void addNewMember(Facebook& facebook)
 {
 	int day, month, year;
@@ -148,6 +157,9 @@ void addNewMember(Facebook& facebook)
 	facebook.addMember(*member);
 }
 
+// adds a new page to facebook. 
+// gets from user the name and birthdate.
+// if there is already a page in facebook with same name, free the name and the new page.
 void addNewFanPage(Facebook& facebook)
 {
 	char* name;
@@ -158,6 +170,8 @@ void addNewFanPage(Facebook& facebook)
 	facebook.addPage(*fanPage);
 }
 
+// adds a new status to page. 
+// gets from user the page to add the status to, the date and the content.
 void addStatusToPage(Facebook& facebook)
 {
 	int choice, day, month, year, hour, minutes;
@@ -174,6 +188,8 @@ void addStatusToPage(Facebook& facebook)
 	facebook.getAllFanPages()[choice]->addStatus(*newStatus);
 }
 
+// adds a new status to member. 
+// gets from user the member to add the status to, the date and the content.
 void addStatusToMember(Facebook& facebook)
 {
 	int choice, day, month, year, hour, minutes;
@@ -189,6 +205,7 @@ void addStatusToMember(Facebook& facebook)
 	facebook.getAllMembers()[choice-1]->addStatus(*newStatus);
 }
 
+// print the fan pages with fixed indexes
 void printFanPagesChoices(Facebook& facebook)
 {
 	for (int i = 0; i < facebook.getNumOfPages(); i++)
@@ -196,7 +213,7 @@ void printFanPagesChoices(Facebook& facebook)
 		cout << i + 1 << " - " << facebook.getAllFanPages()[i]->getPageName() << "\n";
 	}
 }
-
+// print the members with fixed indexes
 void printFriendsChoices(Facebook& facebook)
 {
 	for (int i = 0; i < facebook.getNumOfMembers(); i++)
@@ -205,6 +222,8 @@ void printFriendsChoices(Facebook& facebook)
 	}
 }
 
+// gets from user a string.
+// returns a dynamic string 
 char* getString()
 {
 	int logSize = 0, phySize = 1;
@@ -216,7 +235,7 @@ char* getString()
 		if (phySize == logSize)
 		{
 			phySize *= 2;
-			name = (char*)myrealloc(name, logSize, phySize, sizeof(char));
+			name = (char*)reallocArr(name, logSize, phySize, sizeof(char));
 		}
 		name[logSize] = ch;
 		logSize++;
@@ -226,6 +245,7 @@ char* getString()
 	return name;
 }
 
+// gets from user a page choice and shows all of his statuses.
 void showAllStastusOfPage(Facebook& facebook)
 {
 	int choice;
@@ -235,6 +255,7 @@ void showAllStastusOfPage(Facebook& facebook)
 	facebook.getAllFanPages()[choice]->showAllStatus();
 }
 
+// gets from user a member choice and shows all of his statuses.
 void showAllStatusOfMember(Facebook& facebook)
 {
 	int choice;
@@ -243,6 +264,8 @@ void showAllStatusOfMember(Facebook& facebook)
 	cin >> choice;
 	facebook.getAllMembers()[choice - 1]->showAllStatus();
 }
+
+// gets from user a member choice and shows all of his friends 10 latest statuses.
 void showLatestStatusOfFriend(Facebook& facebook)
 {
 	int choice;
@@ -251,6 +274,7 @@ void showLatestStatusOfFriend(Facebook& facebook)
 	cin >> choice;
 	facebook.getAllMembers()[choice - 1]->showLatestFriendsStatus();
 }
+// gets from user two members and connect both of them as friends on facebook
 void makeFriends(Facebook& facebook)
 {
 	int choice1, choice2;
@@ -264,6 +288,7 @@ void makeFriends(Facebook& facebook)
 	Member* temp2 = facebook.getAllMembers()[choice2 - 1];
 	temp1->addFriend(temp2);
 }
+// gets from user two members and remove them from being friends on facebook.
 void cancelFriendship(Facebook& facebook)
 {
 	int choice1, choice2;
@@ -277,6 +302,8 @@ void cancelFriendship(Facebook& facebook)
 	temp1->removeFriend(temp2);
 }
 
+// gets from the user a member and a page choice.
+// adds the member to be a fan of the fan page.
 void addMemberToPage(Facebook& facebook)
 {
 	int page, member;
@@ -290,6 +317,8 @@ void addMemberToPage(Facebook& facebook)
 	getchar();
 	facebook.getAllFanPages()[page - 1]->addFan(facebook.getAllMembers()[member-1]);
 }
+
+// gets a member and a fan page and removes the member from being a fan of the page.
 void removeMemberFromPage(Facebook& facebook)
 {
 	int page, member;
@@ -302,6 +331,8 @@ void removeMemberFromPage(Facebook& facebook)
 	cin >> member;
 	facebook.getAllFanPages()[page - 1]->removeFan(facebook.getAllMembers()[member - 1]);
 }
+
+// shows all members and pages on facebook.
 void showAll(Facebook& facebook)
 {
 	cout << "All the members on facebook:\n";
@@ -310,6 +341,8 @@ void showAll(Facebook& facebook)
 	cout << "All the fan pages on facebook:\n";
 	facebook.showPages();
 }
+
+// gets a member and shows all of his friends
 void showMemberFriends(Facebook& facebook)
 {
 	int choice;
@@ -319,6 +352,8 @@ void showMemberFriends(Facebook& facebook)
 	getchar();
 	facebook.getAllMembers()[choice - 1]->showAllFriends();
 }
+
+// gets a page and shows all of his fans
 void showPageFans(Facebook& facebook)
 {
 	int choice;

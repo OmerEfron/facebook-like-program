@@ -25,18 +25,21 @@ Member:: ~Member()
 	delete[] _memberFanPages;
 }
 
+// gets a ref to a status and adds its address to the member statuses arr.
 void Member::addStatus(Status& statusToAdd)
 {
 	if (_numOfStatus == _statusesPhySize)
 	{
 		_statusesPhySize *= 2;
-		_memberStatuses = (Status**)myrealloc(_memberStatuses, _numOfStatus, _statusesPhySize, sizeof(Status*));
+		_memberStatuses = (Status**)reallocArr(_memberStatuses, _numOfStatus, _statusesPhySize, sizeof(Status*));
 	}
 	_memberStatuses[_numOfStatus] = &statusToAdd;
 	_numOfStatus++;
 }
 
-int Member::isFriend(Member* member) // returns the index of the friend if found, NOT_FOUND if not.
+// checks if member is friend with this member.
+// returns the index of the friend in his friends arr if found, NOT_FOUND if not.
+int Member::isFriend(Member* member)
 {
 	for (int i = 0; i < _numOfFriends; i++)
 		if (member == _memberFriends[i])
@@ -49,6 +52,7 @@ int Member:: getNumOfStatuses()
 	return _numOfStatus;
 }
 
+// add friendToAdd address to this members friends arr.
 void Member::addFriend(Member* friendToAdd)
 {
 	if (this->isFriend(friendToAdd) >= 0)
@@ -56,12 +60,13 @@ void Member::addFriend(Member* friendToAdd)
 	if (_numOfFriends == _friendsPhySize)
 	{
 		_friendsPhySize *= 2;
-		_memberFriends = (Member**)myrealloc(_memberFriends, _numOfFriends, _friendsPhySize, sizeof(Member*));
+		_memberFriends = (Member**)reallocArr(_memberFriends, _numOfFriends, _friendsPhySize, sizeof(Member*));
 	}
 	_memberFriends[_numOfFriends] = friendToAdd;
 	_numOfFriends++;
 	friendToAdd->addFriend(this);
 }
+// removes the friendToRemove address from this member friends arr.
 void  Member:: removeFriend(Member* friendToRemove)
 {
 	int i = this->isFriend(friendToRemove);
@@ -73,6 +78,8 @@ void  Member:: removeFriend(Member* friendToRemove)
 	friendToRemove->removeFriend(this);
 	return;
 }
+
+// checks if this member is a fan of the fanPage
 int Member::isFan(FanPage* fanPage)
 {
 	for (int i = 0; i < _numOfFanPages; i++)
@@ -81,6 +88,7 @@ int Member::isFan(FanPage* fanPage)
 	return NOT_FOUND;
 }
 
+// add the fanPageToAdd address to this member pages arr.
 void Member::addPage(FanPage* fanPageToAdd)
 {
 	if (this->isFan(fanPageToAdd) >= 0)
@@ -88,12 +96,14 @@ void Member::addPage(FanPage* fanPageToAdd)
 	if (_numOfFanPages == fanPagesPhySize)
 	{
 		fanPagesPhySize *= 2;
-		_memberFanPages = (FanPage**)myrealloc(_memberFanPages, _numOfFanPages, fanPagesPhySize, sizeof(FanPage*));
+		_memberFanPages = (FanPage**)reallocArr(_memberFanPages, _numOfFanPages, fanPagesPhySize, sizeof(FanPage*));
 	}
 	_memberFanPages[_numOfFanPages] = fanPageToAdd;
 	_numOfFanPages++;
 	fanPageToAdd->addFan(this);
 }
+
+// removes fanPageToRemove from this member pages arr.
 void Member:: removePage(FanPage* fanPageToRemove)
 {
 	int i = this->isFan(fanPageToRemove);
@@ -139,18 +149,20 @@ const Status** Member::getStatuses()  const
 	return (const Status**)_memberStatuses;
 }
 
+// shows the last max 10 statuses of this member's friends.
 void Member::showLatestFriendsStatus()
 {
-	
+	cout << _memberName << " friends latest statuses: \n\n";
 	for (int i = 0; i < _numOfFriends; i++)
 	{
 		int numOfStatuses = _memberFriends[i]->getNumOfStatuses();
 		if (numOfStatuses == 0)
 			continue;
+		cout << _memberFriends[i]->getName() << ":\n\n";
 		for (int j = numOfStatuses - 1; j > numOfStatuses - 10 && j >= 0; j--)
 		{
 			_memberFriends[i]->getStatuses()[j]->showStatus();
-			cout << "\n__________________\n";
+			cout << "\n---------------\n";
 		}
 	}
 }

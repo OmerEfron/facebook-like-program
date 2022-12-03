@@ -27,28 +27,31 @@ int Facebook::getNumOfPages() const
 	return _numOfPages;
 }
 
+// gets a ref to Member and adds it to facebook
 void Facebook::addMember(Member& newMember)
 {
 	if (_numOfMembers == _membersPhySize)
 	{
 		_membersPhySize *= 2;
-		_members = (Member**)myrealloc(_members, _numOfMembers, _membersPhySize, sizeof(Member*));
+		_members = (Member**)reallocArr(_members, _numOfMembers, _membersPhySize, sizeof(Member*));
 	}
 	_members[_numOfMembers] = &newMember;
 	_numOfMembers++;
 }
 
+// gets a ref to FanPage and adds it to facebook
 void Facebook::addPage(FanPage& newPage)
 {
 	if (_numOfPages == _pagesPhySize)
 	{
 		_pagesPhySize *= 2;
-		_fanPages = (FanPage**)myrealloc(_fanPages, _numOfPages, _pagesPhySize, sizeof(FanPage*));
+		_fanPages = (FanPage**)reallocArr(_fanPages, _numOfPages, _pagesPhySize, sizeof(FanPage*));
 	}
 	_fanPages[_numOfPages] = &newPage;
 	_numOfPages++;
 }
 
+// shows all members in facebook.
 void Facebook::showMembers() const
 {
 	cout << "Members: \n";
@@ -58,6 +61,7 @@ void Facebook::showMembers() const
 	}
 }
 
+// shows all pages in facebook
 void Facebook::showPages() const
 {
 	cout << "Pages: \n";
@@ -67,12 +71,13 @@ void Facebook::showPages() const
 	}
 }
 
-Member** Facebook::getAllMembers() 
+// returns a const members arr
+Member** const Facebook::getAllMembers() 
 {
 	return _members;
 }
-
-FanPage** Facebook::getAllFanPages()
+// return a const pages arr
+FanPage** const Facebook::getAllFanPages()
 {
 	return _fanPages;
 }
