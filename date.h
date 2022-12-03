@@ -5,10 +5,10 @@
 class Date
 {
 private:
-	int day, month, year;
-
+	int _day, _month, _year;
 public:
-	Date(int d, int m, int y);
+	Date();
+	Date(int day, int month, int year);
 	int getDay();
 	int getMonth();
 	int getYear();

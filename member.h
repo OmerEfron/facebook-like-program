@@ -40,7 +40,7 @@ public:
 	void showAllFanpages(bool withIndex);
 	void showAllFriends(bool withIndex);
 	void showLatestFriendsStatus();
-	int getNumOfMembers();
+	int getNumOfFriends();
 	Member** const getAllMembers();
 };
 #endif // !MEMBER_H

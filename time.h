@@ -7,7 +7,7 @@ private:
 	int hour, minutes;
 
 public:
-	Time(int h, int m);
+	Time();
 	int getHours();
 	int getMinutes();
 	void showHour() const;

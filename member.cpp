@@ -180,7 +180,7 @@ const char* Member:: getName() const
 	return _memberName;
 }
 
-int Member::getNumOfMembers()
+int Member::getNumOfFriends()
 {
 	return _numOfFriends;
 }
