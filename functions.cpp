@@ -44,7 +44,7 @@ void displayMenu()
 		<<"4 - Add status to fan page.\n5 - Show a member statuses.\n6 - Show a fan page statuses\n"
 		<<"7 - Show a member latest 10 statuses.\n8 - Create new friendship between two members.\n"
 		<<"9 - Cancel a friendship between 2 friends\n10 - Add a members as a fan to a fan page.\n"
-		<<"11 - Remove a member from a fan page.\n 12 - Show all members in facebook.\n"
+		<<"11 - Remove a member from a fan page.\n12 - Show all members in facebook.\n"
 		<<"13 - Show a member friends.\n" "14 - Show a fan page fans.\n15 - Exit\n";
 }
 
@@ -140,8 +140,9 @@ void addNewMember(Facebook& facebook)
 {
 	int day, month, year;
 	char* name;
+	cout << "Please enter the new member's name:\n";
 	name = getString();
-	cout << "Enter: Day Month Year";
+	cout << "Please enter:\nDay Month Year\n";
 	cin >> day >> month >> year;
 	Member* member = new Member(name, Date(day, month, year));
 	facebook.addMember(*member);
