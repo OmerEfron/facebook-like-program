@@ -1,8 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "fanPage.h"
 #include "functions.h"
-
+#include <iostream>
 #include <string.h>
+using namespace std;
 FanPage:: FanPage(char* pageName)
 {
 	_pageName = new char[strlen(pageName)+1];
@@ -30,6 +31,17 @@ int FanPage:: isFan(Member* member)
 	return NOT_FOUND;
 }
 
+void FanPage:: addStatus(Status& status)
+{
+	if (_numOfStatus == _statusesPhySize)
+	{
+		_statusesPhySize *= 2;
+		_pageStatuses = (Status**)myrealloc(_pageStatuses, _numOfStatus, _statusesPhySize, sizeof(Status*));
+	}
+	_pageStatuses[_numOfStatus] = &status;
+	_numOfStatus++;
+}
+
 void FanPage::addFan(Member* fanToAdd)
 {
 	if (this->isFan(fanToAdd) >= 0)
@@ -53,4 +65,26 @@ void FanPage::removeFan(Member* fan)
 	_pageFans[_numOfFans - 1] = nullptr;
 	_numOfFans--;
 	fan->removePage(this);
+}
+
+void FanPage::showAllFans()
+{
+	for (int i = 0; i < _numOfFans; i++)
+	{
+		cout << _pageFans[i]->getMemberName() << "\n";
+	}
+}
+
+void FanPage::showAllStatus()
+{
+	for (int i = 0; i < _numOfStatus; i++)
+	{
+		_pageStatuses[i]->showStatus();
+		cout << "\n";
+	}
+}
+
+const char* FanPage:: getPageName()
+{
+	return _pageName;
 }

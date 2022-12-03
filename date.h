@@ -12,7 +12,7 @@ public:
 	int getDay();
 	int getMonth();
 	int getYear();
-	void showDate();
+	void showDate() const;
 
 };
 #endif // !DATE_H

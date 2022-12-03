@@ -16,3 +16,9 @@ Status::~Status()
 {
 	delete[] _content;
 }
+
+void Status:: showStatus() const
+{
+	_statusDate.showDate();
+	cout << "\n"<< _content;
+}

@@ -17,9 +17,12 @@ private:
 public:
 	FanPage(char* pageName);
 	~FanPage();
+	const char* getPageName();
 	void addFan(Member* member);
 	int isFan(Member* fan);
 	void removeFan(Member* member);
-
+	void showAllFans();
+	void showAllStatus();
+	void addStatus(Status&);
 };
 #endif // !FAN_PAGE_H

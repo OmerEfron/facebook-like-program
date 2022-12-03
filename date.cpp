@@ -23,7 +23,7 @@ int Date::getYear()
 }
 
 
-void Date::showDate()
+void Date::showDate() const
 {
 	cout << day << "." << month << "." << year;
 }

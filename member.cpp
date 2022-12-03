@@ -20,8 +20,6 @@ Member::Member(char* name, Date birthDay) : _dateOfBirth(birthDay)
 Member:: ~Member()
 {
 	delete _memberName;
-	//for (int i = 0; i < _numOfStatus; i++)
-		//delete _memberStatuses[i];
 	delete[] _memberStatuses;
 	delete[] _memberFriends;
 	delete[] _memberFanPages;
@@ -36,8 +34,6 @@ void Member::addStatus(Status& statusToAdd)
 	}
 	_memberStatuses[_numOfStatus] = &statusToAdd;
 	_numOfStatus++;
-
-	// ADD TO LATEST STATUSES
 }
 
 int Member::isFriend(Member* member) // returns the index of the friend if found, NOT_FOUND if not.
@@ -46,6 +42,11 @@ int Member::isFriend(Member* member) // returns the index of the friend if found
 		if (member == _memberFriends[i])
 			return i;
 	return NOT_FOUND;
+}
+
+int Member:: getNumOfStatuses()
+{
+	return _numOfStatus;
 }
 
 void Member::addFriend(Member* friendToAdd)
@@ -103,5 +104,58 @@ void Member:: removePage(FanPage* fanPageToRemove)
 	_numOfFanPages--;
 	fanPageToRemove->removeFan(this);
 }
-//void showAllStatus();
-//void showLatestFriendsStatus();
+void Member::showAllStatus() const
+{
+	for (int i = 0; i < _numOfStatus; i++)
+	{
+		_memberStatuses[i]->showStatus();
+		cout << "\n---------------------\n";
+	}
+}
+
+const char* Member:: getMemberName()
+{
+	return _memberName;
+}
+
+void Member::showAllFriends()
+{
+	for (int i = 0; i < _numOfFriends; i++)
+	{
+		cout << _memberFriends[i]->getMemberName()<<"\n";
+	}
+}
+
+void Member::showAllFanpages()
+{
+	for (int i = 0; i < _numOfFanPages; i++)
+	{
+		cout << _memberFanPages[i]->getPageName()<<"\n";
+	}
+}
+
+const Status** Member::getStatuses()  const
+{
+	return (const Status**)_memberStatuses;
+}
+
+void Member::showLatestFriendsStatus()
+{
+	
+	for (int i = 0; i < _numOfFriends; i++)
+	{
+		int numOfStatuses = _memberFriends[i]->getNumOfStatuses();
+		if (numOfStatuses == 0)
+			continue;
+		for (int j = numOfStatuses - 1; j > numOfStatuses - 10 && j >= 0; j--)
+		{
+			_memberFriends[i]->getStatuses()[j]->showStatus();
+			cout << "\n__________________\n";
+		}
+	}
+}
+
+const char* Member:: getName() const
+{
+	return _memberName;
+}

@@ -13,6 +13,7 @@ private:
 
 public:
 	Status(char*, Date date, Time time);
+	void showStatus() const;
 	~Status();
 };
 

@@ -18,7 +18,6 @@ private:
 	int _numOfStatus, _numOfFriends, _numOfFanPages;
 	int _statusesPhySize, _friendsPhySize, fanPagesPhySize;
 	Status** _memberStatuses;
-	//listOfStatuses _memberLatestFriendsStatus;
 	Member** _memberFriends;
 	FanPage** _memberFanPages;
 public:
@@ -26,12 +25,20 @@ public:
 	~Member();
 	int isFriend(Member* member);
 	int isFan(FanPage* fanPage);
+	void addToLatestStatuses(Status& status);
+	void addToFriendsLatestStatuses(Status& status);
 	void addFriend(Member* friendToAdd);
 	void removeFriend(Member* friendToRemove);
 	void addPage(FanPage* fanPageToAdd);
 	void removePage(FanPage* fanPageToRemove);
 	void addStatus(Status& statusToAdd);
-	void showAllStatus();
+	const char* getMemberName();
+	int getNumOfStatuses();
+	const Status** getStatuses() const;
+	const char* getName() const;
+	void showAllStatus() const;
+	void showAllFanpages();
+	void showAllFriends();
 	void showLatestFriendsStatus();
 };
 #endif // !MEMBER_H
