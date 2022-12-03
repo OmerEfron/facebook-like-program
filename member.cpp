@@ -67,7 +67,7 @@ void  Member:: removeFriend(Member* friendToRemove)
 	int i = this->isFriend(friendToRemove);
 	if (i < 0)
 		return;
-	swap(_memberFriends[i], _memberFriends[_numOfFriends-1], sizeof(Member**));
+	swap1(&_memberFriends[i], &_memberFriends[_numOfFriends-1], sizeof(Member*));
 	_memberFriends[_numOfFriends-1] = nullptr;
 	_numOfFriends--;
 	friendToRemove->removeFriend(this);
@@ -99,7 +99,7 @@ void Member:: removePage(FanPage* fanPageToRemove)
 	int i = this->isFan(fanPageToRemove);
 	if (i < 0)
 		return;
-	swap(_memberFanPages[i], _memberFanPages[_numOfFanPages - 1], sizeof(FanPage*));
+	swap1(&_memberFanPages[i], &_memberFanPages[_numOfFanPages - 1], sizeof(FanPage*));
 	_memberFanPages[_numOfFanPages - 1] = nullptr;
 	_numOfFanPages--;
 	fanPageToRemove->removeFan(this);

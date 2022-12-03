@@ -61,7 +61,7 @@ void FanPage::removeFan(Member* fan)
 	int i = this->isFan(fan);
 	if (i < 0)
 		return;
-	swap(_pageFans[i], _pageFans[_numOfFans - 1], sizeof(Member*));
+	swap1(&_pageFans[i], &_pageFans[_numOfFans - 1],sizeof(Member*));
 	_pageFans[_numOfFans - 1] = nullptr;
 	_numOfFans--;
 	fan->removePage(this);

@@ -1,6 +1,7 @@
 #include "functions.h"
 #include <string.h>
 #include <iostream>
+#include <stdlib.h>
 #define ADD_NEW_MEMBER 1
 #define ADD_NEW_FAN_PAGE 2
 #define ADD_NEW_STATUS_TO_MEMBER 3
@@ -27,19 +28,21 @@ void* myrealloc(void* arr, int& logSize, int& physize, int elemSize)
 	return newArr;
 }
 
-void swap(void* x, void* y, int elemSize)
+void swap1(void* x, void* y, int elemSize)
 {
-	void* temp = y;
-	y = x;
-	x = temp;
+	void* temp = malloc(elemSize);
+	memcpy((unsigned char*)temp, (unsigned char*)y, elemSize);
+	memcpy((unsigned char*)y, (unsigned char*)x, elemSize);
+	memcpy((unsigned char*)x, (unsigned char*)temp, elemSize);
+	free(temp);
 }
 
 void displayMenu()
 {
 	cout << "Welcome to FACEBOOK\n-------------\nPlease choose one of the following:\n"
 		<< "1 - Add new member.\n2 - Add new fan page.\n3 - Add status to member.\n"
-		<<"4 - Add status to fan page.\n5 - Show a member statuses.\n6 - Show a fan page statuses"
-		<<"7 - Show a member latest 10 statuses.\n 8 - Create new friendship between two members.\n"
+		<<"4 - Add status to fan page.\n5 - Show a member statuses.\n6 - Show a fan page statuses\n"
+		<<"7 - Show a member latest 10 statuses.\n8 - Create new friendship between two members.\n"
 		<<"9 - Cancel a friendship between 2 friends\n10 - Add a members as a fan to a fan page.\n"
 		<<"11 - Remove a member from a fan page.\n 12 - Show all members in facebook.\n"
 		<<"13 - Show a member friends.\n" "14 - Show a fan page fans.\n15 - Exit\n";
