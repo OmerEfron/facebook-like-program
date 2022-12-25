@@ -27,11 +27,6 @@ int main()
 	Status status6(statusStr[5], Date(), Time());
 	FanPage mhod(fanPageStr[0]);
 	FanPage vs(fanPageStr[1]);
-	//efron += shafir;
-	if (efron > shafir)
-	{
-		return 0;
-	}
 	facebook.addMember(efron);
 	facebook.addMember(shafir);
 	facebook.addMember(ohad);

@@ -5,7 +5,6 @@
 #include "date.h"
 #include "status.h"
 #include "fanPage.h"
-#include "listOfStatus.h"
 const int NOT_FOUND = -1;
 
 class FanPage;
