@@ -75,6 +75,7 @@ void Member::addFriend(Member* friendToAdd)
 		_memberFriends = (Member**)reallocArr(_memberFriends, _numOfFriends, _friendsPhySize, sizeof(Member*));
 	}
 	_memberFriends[_numOfFriends] = friendToAdd;
+	_memberFriends2.push_back(friendToAdd);
 	_numOfFriends++;
 	friendToAdd->addFriend(this);
 }
@@ -90,6 +91,10 @@ void  Member:: removeFriend(Member* friendToRemove)
 	swap1(&_memberFriends[i], &_memberFriends[_numOfFriends-1], sizeof(Member*));
 	_memberFriends[_numOfFriends-1] = nullptr;
 	_numOfFriends--;
+	vector<Member*>::iterator itr = _memberFriends2.begin();
+	vector<Member*>::iterator itrEnd = _memberFriends2.end();
+	vector<Member*>::iterator tmp = find(itr, itrEnd, friendToRemove);
+	_memberFriends2.erase(tmp);
 	friendToRemove->removeFriend(this);
 	return;
 }
@@ -114,6 +119,7 @@ void Member::addPage(FanPage* fanPageToAdd)
 		_memberFanPages = (FanPage**)reallocArr(_memberFanPages, _numOfFanPages, fanPagesPhySize, sizeof(FanPage*));
 	}
 	_memberFanPages[_numOfFanPages] = fanPageToAdd;
+	_memberFanPages2.push_back(fanPageToAdd);
 	_numOfFanPages++;
 	fanPageToAdd->addFan(this);
 }
@@ -127,6 +133,10 @@ void Member:: removePage(FanPage* fanPageToRemove)
 	swap1(&_memberFanPages[i], &_memberFanPages[_numOfFanPages - 1], sizeof(FanPage*));
 	_memberFanPages[_numOfFanPages - 1] = nullptr;
 	_numOfFanPages--;
+	vector<FanPage*>::iterator itr = _memberFanPages2.begin();
+	vector<FanPage*>::iterator itrEnd = _memberFanPages2.end();
+	vector<FanPage*>::iterator tmp = find(itr, itrEnd, fanPageToRemove);
+	_memberFanPages2.erase(tmp);
 	fanPageToRemove->removeFan(this);
 }
 void Member::showAllStatus() const

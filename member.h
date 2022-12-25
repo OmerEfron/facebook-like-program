@@ -5,6 +5,7 @@
 #include "date.h"
 #include "status.h"
 #include "fanPage.h"
+#include <vector>
 const int NOT_FOUND = -1;
 
 class FanPage;
@@ -18,7 +19,9 @@ private:
 	int _statusesPhySize, _friendsPhySize, fanPagesPhySize;
 	Status** _memberStatuses;
 	Member** _memberFriends;
+	std::vector<Member*> _memberFriends2;
 	FanPage** _memberFanPages;
+	std::vector<FanPage*> _memberFanPages2;
 public:
 	Member(const char* name, const Date birthDay);
 	Member(const Member&) = delete;

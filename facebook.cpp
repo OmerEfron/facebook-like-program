@@ -39,6 +39,7 @@ bool Facebook::addMember(Member& newMember)
 		}
 		 Member* memberToAdd = new Member(newMember.getName(), newMember.getMemberBirthDate());
 		_members[_numOfMembers] = memberToAdd;
+		_members2.push_back(memberToAdd);
 		_numOfMembers++;
 		return true;
 	}
@@ -55,7 +56,9 @@ bool Facebook::addPage(FanPage& newPage)
 			_pagesPhySize *= 2;
 			_fanPages = (FanPage**)reallocArr(_fanPages, _numOfPages, _pagesPhySize, sizeof(FanPage*));
 		}
-		_fanPages[_numOfPages] = &newPage;
+		FanPage* fanPageToAdd = new FanPage(newPage.getPageName());
+		_fanPages[_numOfPages] = fanPageToAdd;
+		_fanPages2.push_back(fanPageToAdd);
 		_numOfPages++;
 		return true;
 	}
@@ -66,9 +69,20 @@ bool Facebook::addPage(FanPage& newPage)
 void Facebook::showMembers() const
 {
 	cout << "Members: \n";
-	for (int i = 0; i < _numOfMembers; i++)
+	//for (int i = 0; i < _numOfMembers; i++)
+	//{
+	//	cout<<_members[i]->getMemberName()<<"\n";
+	//}
+	vector<Member*>::const_iterator itr = _members2.begin();
+	vector<Member*>::const_iterator itrEnd = _members2.end();
+	if (itr == itrEnd)
 	{
-		cout<<_members[i]->getMemberName()<<"\n";
+		cout << "No Members"<< endl;
+	}
+	else
+	{
+		for (; itr != itrEnd; ++itr)
+			cout << ((Member*)*itr)->getMemberName() << endl;
 	}
 }
 
@@ -76,10 +90,23 @@ void Facebook::showMembers() const
 void Facebook::showPages() const
 {
 	cout << "Pages: \n";
-	for (int i = 0; i < _numOfPages; i++)
+	/*for (int i = 0; i < _numOfPages; i++)
 	{
 		cout << _fanPages[i]->getPageName() << "\n";
+	}*/
+
+	vector<FanPage*>::const_iterator itr = _fanPages2.begin();
+	vector<FanPage*>::const_iterator itrEnd = _fanPages2.end();
+	if (itr == itrEnd)
+	{
+		cout << "No Pages" << endl;
 	}
+	else
+	{
+		for (; itr != itrEnd; ++itr)
+			cout << ((FanPage*)*itr)->getPageName() << endl;
+	}
+
 }
 
 // returns a const members arr
@@ -88,9 +115,9 @@ Member** const Facebook::getAllMembers()
 	return _members;
 }
 // return a const pages arr
-FanPage** const Facebook::getAllFanPages()
+vector<FanPage*> const Facebook::getAllFanPages()
 {
-	return _fanPages;
+	return _fanPages2;
 }
 
 bool Facebook::isNameMemberUsed(Member& member)

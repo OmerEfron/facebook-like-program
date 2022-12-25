@@ -4,6 +4,7 @@
 
 #include "member.h"
 #include "fanPage.h"
+#include <vector>
 
 
 
@@ -11,7 +12,9 @@ class Facebook {
 private:
 	int _numOfMembers, _numOfPages, _membersPhySize, _pagesPhySize;
 	Member** _members;
+	std::vector<Member*> _members2;
 	FanPage** _fanPages;
+	std::vector <FanPage*> _fanPages2;
 
 public:
 	Facebook();
@@ -24,7 +27,7 @@ public:
 	void showMembers() const;
 	void showPages() const;
 	Member ** const getAllMembers();
-	FanPage** const getAllFanPages();
+	std::vector<FanPage*> const getAllFanPages();
 	bool isNameMemberUsed(Member& member);
 	bool isNameFanPageUsed(FanPage& fanPage);
 

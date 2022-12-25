@@ -2,7 +2,7 @@
 #define FAN_PAGE_H
 #include "status.h"
 #include "member.h"
-
+#include <vector>
 class Member;
 
 class FanPage {
@@ -14,18 +14,20 @@ private:
 	int _fansPhySize;
 	Status** _pageStatuses;
 	Member** _pageFans;
+	std::vector <Member*> _pageFans2;
+
 public:
-	FanPage(char* pageName);
+	FanPage(const char* pageName);
 	~FanPage();
 	const char* getPageName();
 	void addFan(Member* member);
-	int isFan(Member* fan);
+	std::vector<Member*>::iterator isFan(Member* fan);
 	void removeFan(Member* member);
 	void showAllFans(bool withIndex);
 	void showAllStatus();
 	void addStatus(Status&);
 	int getNumOfFans();
-	Member** const getPageFans();
+	std::vector<Member*> const getPageFans();
 	bool operator>(const FanPage& other)const;
 
 };

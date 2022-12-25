@@ -160,8 +160,8 @@ void addNewMember(Facebook& facebook)
 	if (!facebook.addMember(*member))
 	{
 		cout << "There is already a member with " << name << " as his name";
-		delete member;
 	}
+	delete member;
 	delete name;
 }
 
@@ -178,8 +178,8 @@ void addNewFanPage(Facebook& facebook)
 	if (!facebook.addPage(*fanPage))
 	{
 		cout << "There is already a page with " << name << " as his name";
-		delete fanPage;
 	}
+	delete fanPage;
 	delete name;
 }
 
@@ -335,7 +335,9 @@ void removeMemberFromPage(Facebook& facebook)
 			cin >> member;
 			getchar();
 		} while (member<1 || member>numOfMembers);
-		facebook.getAllFanPages()[page - 1]->removeFan(facebook.getAllFanPages()[page - 1]->getPageFans()[member - 1]);
+		//facebook.getAllFanPages()[page - 1]->removeFan(facebook.getAllFanPages()[page - 1]->getPageFans()[member - 1]);
+		//facebook.getAllFanPages()[page - 1]->removeFan((Member*)*(facebook.getAllFanPages()[page - 1]->getPageFans().begin()+(member - 1)));
+		//facebook.getAllFanPages()[page - 1]->removeFan((Member*)*((FanPage*)*(facebook.getAllFanPages().begin()+(page - 1))->getPageFans().begin() + (member - 1)));
 	}
 	else
 		cout << "No fans";
