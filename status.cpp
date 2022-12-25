@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-Status::Status(char* content, Date date, Time time) : _statusDate(date), _statusTime(time)
+Status::Status(const char* content, const Date date, const Time time) : _statusDate(date), _statusTime(time)
 {
 	_content = new char[strlen(content) + 1];
 	strcpy(_content, content);
@@ -15,6 +15,20 @@ Status::Status(char* content, Date date, Time time) : _statusDate(date), _status
 Status::~Status()
 {
 	delete[] _content;
+}
+
+
+const char* Status:: getContent() const
+{
+	return _content;
+}
+const Date Status::getDate() const
+{
+	return _statusDate;
+}
+const Time Status::getTime() const
+{
+	return _statusTime;
 }
 
 void Status:: showStatus() const

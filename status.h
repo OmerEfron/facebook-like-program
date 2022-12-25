@@ -12,7 +12,11 @@ private:
 	char* _content;
 
 public:
-	Status(char*, Date date, Time time);
+	Status(const char*,const  Date date,const Time time);
+	Status(Status&) = delete;
+	const char* getContent() const;
+	const Date getDate() const;
+	const Time getTime() const;
 	void showStatus() const;
 	~Status();
 };

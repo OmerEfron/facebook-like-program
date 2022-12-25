@@ -20,15 +20,15 @@ Date::Date(int day, int month, int year)
 	_year = year;
 }
 
-int Date::getDay()
+int Date::getDay() const
 {
 	return _day;
 }
-int Date::getMonth()
+int Date::getMonth() const
 {
 	return _month;
 }
-int Date::getYear()
+int Date::getYear() const
 {
 	return _year;
 }

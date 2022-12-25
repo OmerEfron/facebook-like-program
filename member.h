@@ -21,7 +21,8 @@ private:
 	Member** _memberFriends;
 	FanPage** _memberFanPages;
 public:
-	Member(char* name, Date birthDay);
+	Member(const char* name, const Date birthDay);
+	Member(const Member&) = delete;
 	~Member();
 	int isFriend(Member* member);
 	int isFan(FanPage* fanPage);
@@ -36,11 +37,14 @@ public:
 	int getNumOfStatuses();
 	const Status** getStatuses() const;
 	const char* getName() const;
+	Date getMemberBirthDate() const;
 	void showAllStatus() const;
 	void showAllFanpages(bool withIndex);
 	void showAllFriends(bool withIndex);
 	void showLatestFriendsStatus();
 	int getNumOfFriends();
 	Member** const getAllMembers();
+	void operator+=(Member& memberToAdd);
+	bool operator>(const Member& other) const;
 };
 #endif // !MEMBER_H

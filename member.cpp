@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-Member::Member(char* name, Date birthDay) : _dateOfBirth(birthDay)
+Member::Member(const char* name, const Date birthDay) : _dateOfBirth(birthDay)
 {
 	_memberName = new char[strlen(name) + 1];
 	strcpy(_memberName, name);
@@ -17,24 +17,36 @@ Member::Member(char* name, Date birthDay) : _dateOfBirth(birthDay)
 	_memberFanPages = new FanPage * [1];
 }
 
+
 Member:: ~Member()
 {
-	delete _memberName;
+	delete[] _memberName;
 	delete[] _memberStatuses;
 	delete[] _memberFriends;
 	delete[] _memberFanPages;
 }
 
 // gets a ref to a status and adds its address to the member statuses arr.
-void Member::addStatus(Status& statusToAdd)
+void Member::addStatus(Status& status)
 {
 	if (_numOfStatus == _statusesPhySize)
 	{
 		_statusesPhySize *= 2;
 		_memberStatuses = (Status**)reallocArr(_memberStatuses, _numOfStatus, _statusesPhySize, sizeof(Status*));
 	}
-	_memberStatuses[_numOfStatus] = &statusToAdd;
+	Status* statusToAdd = new Status(status.getContent(), status.getDate(), status.getTime());
+	_memberStatuses[_numOfStatus] = statusToAdd;
 	_numOfStatus++;
+}
+
+void Member:: operator+=(Member& memberToAdd)
+{
+	addFriend(&memberToAdd);
+}
+
+bool Member:: operator>(const Member& other) const
+{
+	return this->_numOfFriends > other._numOfFriends;
 }
 
 // checks if member is friend with this member.
@@ -66,6 +78,9 @@ void Member::addFriend(Member* friendToAdd)
 	_numOfFriends++;
 	friendToAdd->addFriend(this);
 }
+
+
+
 // removes the friendToRemove address from this member friends arr.
 void  Member:: removeFriend(Member* friendToRemove)
 {
@@ -126,6 +141,11 @@ void Member::showAllStatus() const
 const char* Member:: getMemberName()
 {
 	return _memberName;
+}
+
+Date Member:: getMemberBirthDate() const
+{
+	return _dateOfBirth;
 }
 
 void Member::showAllFriends(bool withIndex)

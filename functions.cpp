@@ -194,6 +194,7 @@ void addStatusToPage(Facebook& facebook)
 	content = getString();
 	Status* newStatus = new Status(content, Date(), Time());
 	facebook.getAllFanPages()[choice-1]->addStatus(*newStatus);
+	delete newStatus;
 }
 
 // adds a new status to member. 
@@ -207,6 +208,8 @@ void addStatusToMember(Facebook& facebook)
 	content = getString();
 	Status* newStatus = new Status(content, Date(), Time());
 	facebook.getAllMembers()[choice-1]->addStatus(*newStatus);
+	delete newStatus;
+	delete content;
 }
 
 // print the fan pages with fixed indexes

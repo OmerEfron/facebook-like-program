@@ -42,7 +42,8 @@ void FanPage:: addStatus(Status& status)
 		_statusesPhySize *= 2;
 		_pageStatuses = (Status**)reallocArr(_pageStatuses, _numOfStatus, _statusesPhySize, sizeof(Status*));
 	}
-	_pageStatuses[_numOfStatus] = &status;
+	Status* newStatus = new Status(status.getContent(), status.getDate(), status.getTime());
+	_pageStatuses[_numOfStatus] = newStatus;
 	_numOfStatus++;
 }
 
@@ -112,4 +113,9 @@ int FanPage:: getNumOfFans()
 Member** const FanPage::getPageFans() 
 {
 	return _pageFans;
+}
+
+bool FanPage:: operator>(const FanPage& other)const
+{
+	return this->_numOfFans > other._numOfFans;
 }

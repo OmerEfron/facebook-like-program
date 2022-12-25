@@ -26,6 +26,7 @@ public:
 	void addStatus(Status&);
 	int getNumOfFans();
 	Member** const getPageFans();
+	bool operator>(const FanPage& other)const;
 
 };
 #endif // !FAN_PAGE_H

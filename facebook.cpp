@@ -37,7 +37,8 @@ bool Facebook::addMember(Member& newMember)
 			_membersPhySize *= 2;
 			_members = (Member**)reallocArr(_members, _numOfMembers, _membersPhySize, sizeof(Member*));
 		}
-		_members[_numOfMembers] = &newMember;
+		 Member* memberToAdd = new Member(newMember.getName(), newMember.getMemberBirthDate());
+		_members[_numOfMembers] = memberToAdd;
 		_numOfMembers++;
 		return true;
 	}
