@@ -26,10 +26,12 @@ public:
 	bool addPage(FanPage& newPage);
 	void showMembers() const;
 	void showPages() const;
-	Member ** const getAllMembers();
+	std::vector<Member*> const getAllMembers();
 	std::vector<FanPage*> const getAllFanPages();
 	bool isNameMemberUsed(Member& member);
 	bool isNameFanPageUsed(FanPage& fanPage);
+	void removeMemberFromPage(FanPage& page, Member& member);
+	void cancelFriendship(Member& mem1, Member& mem2);
 
 };
 #endif // !FACEBOOK_H

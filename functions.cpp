@@ -292,20 +292,23 @@ void cancelFriendship(Facebook& facebook)
 {
 	int choice1 = checkInputMembers(facebook);
 	int choice2;
-	int numOfMembers = facebook.getAllMembers()[choice1 - 1]->getNumOfFriends();
+
+	Member* member1 = (Member*)*(facebook.getAllMembers().begin() + choice1 - 1);
+
+	int numOfMembers = member1->getAllMembers().size();
 
 	if (numOfMembers > 0)
 	{
 		do {
 			cout << "Please choose the second member:\n";
-			facebook.getAllMembers()[choice1 - 1]->showAllFriends(true);
+			member1->showAllFriends(true);
 			cin >> choice2;
 			getchar();
 		} while (choice2<1 || choice2>numOfMembers);
-
-		Member* temp1 = facebook.getAllMembers()[choice1 - 1];
-		Member* temp2 = facebook.getAllMembers()[choice1 - 1]->getAllMembers()[choice2 - 1];
-		temp1->removeFriend(temp2);
+		Member* member2 = (Member*)*(member1->getAllMembers().begin() + choice2 - 1);
+		/*Member* temp1 = facebook.getAllMembers()[choice1 - 1];
+		Member* temp2 = facebook.getAllMembers()[choice1 - 1]->getAllMembers()[choice2 - 1];*/
+		member1->removeFriend(member2);
 	}
 	else
 		cout << "No members";
@@ -325,19 +328,19 @@ void removeMemberFromPage(Facebook& facebook)
 {
 	int page, member;
 	page = checkInputFanPages(facebook);
-
-	int numOfMembers = facebook.getAllFanPages()[page - 1]->getNumOfFans();
+	FanPage* fanPageToRemoveFrom = (FanPage*)*(facebook.getAllFanPages().begin() + page - 1);
+	int numOfMembers = fanPageToRemoveFrom->getPageFans().size();
 	if (numOfMembers > 0)
 	{
 		do {
 			cout << "Please choose one fan:\n";
-			facebook.getAllFanPages()[page - 1]->showAllFans(true);
+			fanPageToRemoveFrom->showAllFans(true);
 			cin >> member;
 			getchar();
 		} while (member<1 || member>numOfMembers);
-		//facebook.getAllFanPages()[page - 1]->removeFan(facebook.getAllFanPages()[page - 1]->getPageFans()[member - 1]);
-		//facebook.getAllFanPages()[page - 1]->removeFan((Member*)*(facebook.getAllFanPages()[page - 1]->getPageFans().begin()+(member - 1)));
-		//facebook.getAllFanPages()[page - 1]->removeFan((Member*)*((FanPage*)*(facebook.getAllFanPages().begin()+(page - 1))->getPageFans().begin() + (member - 1)));
+		Member* memberToRemove = (Member*)*(fanPageToRemoveFrom->getPageFans().begin() + member -1);
+		facebook.removeMemberFromPage(*fanPageToRemoveFrom, *memberToRemove);
+		
 	}
 	else
 		cout << "No fans";

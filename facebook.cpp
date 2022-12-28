@@ -110,9 +110,9 @@ void Facebook::showPages() const
 }
 
 // returns a const members arr
-Member** const Facebook::getAllMembers() 
+vector<Member*> const Facebook::getAllMembers()
 {
-	return _members;
+	return _members2;
 }
 // return a const pages arr
 vector<FanPage*> const Facebook::getAllFanPages()
@@ -137,4 +137,14 @@ bool Facebook::isNameFanPageUsed(FanPage& fanPage)
 			return true;
 	}
 	return false;
+}
+
+void Facebook:: removeMemberFromPage(FanPage& page, Member& member)
+{
+	page.removeFan(&member);
+}
+
+void Facebook::cancelFriendship(Member& mem1, Member& mem2)
+{
+	mem1.removeFriend(&mem2);
 }

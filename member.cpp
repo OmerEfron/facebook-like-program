@@ -94,7 +94,7 @@ void  Member:: removeFriend(Member* friendToRemove)
 	vector<Member*>::iterator itr = _memberFriends2.begin();
 	vector<Member*>::iterator itrEnd = _memberFriends2.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, friendToRemove);
-	_memberFriends2.erase(tmp);
+	_memberFriends2.erase(tmp); // add exeption if 
 	friendToRemove->removeFriend(this);
 	return;
 }
@@ -215,7 +215,7 @@ int Member::getNumOfFriends()
 	return _numOfFriends;
 }
 
-Member** const Member::getAllMembers()
+vector<Member*> const Member::getAllMembers()
 {
-	return _memberFriends;
+	return _memberFriends2;
 }

@@ -45,7 +45,7 @@ public:
 	void showAllFriends(bool withIndex);
 	void showLatestFriendsStatus();
 	int getNumOfFriends();
-	Member** const getAllMembers();
+	std::vector<Member*> const getAllMembers();
 	void operator+=(Member& memberToAdd);
 	bool operator>(const Member& other) const;
 };
