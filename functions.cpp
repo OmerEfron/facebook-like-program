@@ -31,16 +31,6 @@ void* reallocArr(void* arr, int logSize, int physize, int elemSize)
 	return newArr;
 }
 
-// swap adresses between 2 elements from same type.
-void swap1(void* x, void* y, int elemSize)
-{
-	void* temp = malloc(elemSize);
-	memcpy((unsigned char*)temp, (unsigned char*)y, elemSize);
-	memcpy((unsigned char*)y, (unsigned char*)x, elemSize);
-	memcpy((unsigned char*)x, (unsigned char*)temp, elemSize);
-	free(temp);
-}
-
 // display the system menu.
 void displayMenu()
 {
@@ -185,7 +175,7 @@ void addNewFanPage(Facebook& facebook)
 
 // adds a new status to page. 
 // gets from user the page to add the status to, the date and the content.
-void addStatusToPage(Facebook& facebook)
+void addStatusToPage(Facebook& facebook) 
 {
 	int choice = checkInputFanPages(facebook);
 	
@@ -193,7 +183,7 @@ void addStatusToPage(Facebook& facebook)
 	cout << "\nEnter content: \n";
 	content = getString();
 	Status* newStatus = new Status(content, Date(), Time());
-	facebook.getAllFanPages()[choice-1]->addStatus(*newStatus);
+	facebook.findFanPage(choice)->addStatus(*newStatus);
 	delete newStatus;
 }
 
@@ -207,7 +197,7 @@ void addStatusToMember(Facebook& facebook)
 	cout << "\nEnter content: \n";
 	content = getString();
 	Status* newStatus = new Status(content, Date(), Time());
-	facebook.getAllMembers()[choice-1]->addStatus(*newStatus);
+	facebook.findMember(choice)->addStatus(*newStatus);
 	delete newStatus;
 	delete content;
 }
@@ -217,7 +207,7 @@ void printFanPagesChoices(Facebook& facebook)
 {
 	for (int i = 0; i < facebook.getNumOfPages(); i++)
 	{
-		cout << i + 1 << " - " << facebook.getAllFanPages()[i]->getPageName() << "\n";
+		cout << i + 1 << " - " << facebook.findFanPage(i)->getPageName() << "\n";
 	}
 }
 // print the members with fixed indexes
@@ -225,7 +215,7 @@ void printFriendsChoices(Facebook& facebook)
 {
 	for (int i = 0; i < facebook.getNumOfMembers(); i++)
 	{
-		cout << i + 1 << " - " << facebook.getAllMembers()[i]->getName() << "\n";
+		cout << i + 1 << " - " << facebook.findMember(i)->getName() << "\n";
 	}
 }
 

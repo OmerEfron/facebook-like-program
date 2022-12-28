@@ -10,10 +10,7 @@
 
 class Facebook {
 private:
-	int _numOfMembers, _numOfPages, _membersPhySize, _pagesPhySize;
-	Member** _members;
 	std::vector<Member*> _members2;
-	FanPage** _fanPages;
 	std::vector <FanPage*> _fanPages2;
 
 public:
@@ -27,12 +24,13 @@ public:
 	void showMembers() const;
 	void showPages() const;
 	std::vector<Member*> const getAllMembers();
-	std::vector<FanPage*> const getAllFanPages();
+	const std::vector<FanPage*>  getAllFanPages();
 	bool isNameMemberUsed(Member& member);
 	bool isNameFanPageUsed(FanPage& fanPage);
 	void removeMemberFromPage(FanPage& page, Member& member);
 	void cancelFriendship(Member& mem1, Member& mem2);
-
+	FanPage* findFanPage(int index);
+	Member* findMember(int index);
 };
 #endif // !FACEBOOK_H
 

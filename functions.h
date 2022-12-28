@@ -7,10 +7,10 @@
 #include "fanPage.h"
 #include "status.h"
 
+
 class Facebook;
 
 void* reallocArr(void* arr, int logSize, int physize, int elemSize);
-void swap1(void* x, void* y, int elemSize);
 
 Member* createNewMember();
 FanPage* createNewFanPage();

@@ -11,6 +11,7 @@ private:
 	Time _statusTime;
 	char* _content;
 
+
 public:
 	Status(const char*,const  Date date,const Time time);
 	Status(Status&) = delete;
