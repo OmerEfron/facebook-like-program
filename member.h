@@ -5,6 +5,7 @@
 #include "date.h"
 #include "status.h"
 #include "fanPage.h"
+#include <string>
 #include <vector>
 const int NOT_FOUND = -1;
 
@@ -13,25 +14,23 @@ class FanPage;
 class Member {
 
 private:
-	char* _memberName;
 	Date _dateOfBirth;
-	std::vector<Status*> _memberStatus2;
-	std::vector<Member*> _memberFriends2;
-	std::vector<FanPage*> _memberFanPages2;
+	std::string _memberName;
+	std::vector<Status*> _memberStatus;
+	std::vector<Member*> _memberFriends;
+	std::vector<FanPage*> _memberFanPages;
 public:
-	Member(const char* name, const Date birthDay);
+	Member(std::string str, const Date birthDay);
 	Member(const Member&) = delete;
 	~Member();
-	
 	
 	void addFriend(Member* friendToAdd);
 	void removeFriend(Member* friendToRemove);
 	void addPage(FanPage* fanPageToAdd);
 	void removePage(FanPage* fanPageToRemove);
 	void addStatus(Status& statusToAdd);
-	const char* getMemberName();
+	std::string getMemberName() const;
 	int getNumOfStatuses();
-	const char* getName() const;
 	Date getMemberBirthDate() const;
 	void showAllStatus() const;
 	void showAllFanpages(bool withIndex);

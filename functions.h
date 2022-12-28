@@ -6,21 +6,17 @@
 #include "member.h"
 #include "fanPage.h"
 #include "status.h"
+#include <string>
 
 
 class Facebook;
-
-void* reallocArr(void* arr, int logSize, int physize, int elemSize);
-
-Member* createNewMember();
-FanPage* createNewFanPage();
 
 void displayMenu();
 
 bool getChoice(Facebook& facebook);
 
 void addNewMember(Facebook& facebook);
-char* getString();
+std::string* getString();
 void addNewFanPage(Facebook& facebook);
 void addStatusToPage(Facebook& facebook);
 void addStatusToMember(Facebook& facebook);

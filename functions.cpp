@@ -1,5 +1,6 @@
 #include "functions.h"
 #include <string.h>
+#include <string>
 #include <iostream>
 #include <stdlib.h>
 #define ADD_NEW_MEMBER 1
@@ -19,17 +20,6 @@
 #define EXIT 15
 using namespace std;
 
-
-// reallocate the arr, from any type, with a size of the given phySize.
-//copies the first logSize elements to the new arr and free the old one.
-void* reallocArr(void* arr, int logSize, int physize, int elemSize)
-{
-	void* newArr;
-	newArr = new unsigned char[elemSize * physize];
-	memcpy(newArr, (unsigned char*)arr, logSize * elemSize);
-	delete arr;
-	return newArr;
-}
 
 // display the system menu.
 void displayMenu()
@@ -141,15 +131,15 @@ bool getChoice(Facebook& facebook)
 void addNewMember(Facebook& facebook)
 {
 	int day, month, year;
-	char* name;
+	string* name;
 	cout << "Please enter the new member's name:\n";
 	name = getString();
 	cout << "Please enter:\nDay Month Year, seperated with white space\n";
 	cin >> day >> month >> year;
-	Member* member = new Member(name, Date(day, month, year));
+	Member* member = new Member(*name, Date(day, month, year));
 	if (!facebook.addMember(*member))
 	{
-		cout << "There is already a member with " << name << " as his name";
+		cout << "There is already a member with " << *name << " as his name";
 	}
 	delete member;
 	delete name;
@@ -160,14 +150,14 @@ void addNewMember(Facebook& facebook)
 // if there is already a page in facebook with same name, free the name and the new page.
 void addNewFanPage(Facebook& facebook)
 {
-	char* name;
+	string* name;
 	cout << "Please enter the new page's name:\n";
 	name = getString();
 
-	FanPage* fanPage = new FanPage(name);
+	FanPage* fanPage = new FanPage(*name);
 	if (!facebook.addPage(*fanPage))
 	{
-		cout << "There is already a page with " << name << " as his name";
+		cout << "There is already a page with " << *name << " as his name";
 	}
 	delete fanPage;
 	delete name;
@@ -179,12 +169,13 @@ void addStatusToPage(Facebook& facebook)
 {
 	int choice = checkInputFanPages(facebook);
 	
-	char* content;
+	string* content;
 	cout << "\nEnter content: \n";
 	content = getString();
-	Status* newStatus = new Status(content, Date(), Time());
-	facebook.findFanPage(choice)->addStatus(*newStatus);
+	Status* newStatus = new Status(*content, Date(), Time());
+	facebook.findFanPage(choice - 1)->addStatus(*newStatus);
 	delete newStatus;
+	delete content;
 }
 
 // adds a new status to member. 
@@ -193,11 +184,11 @@ void addStatusToMember(Facebook& facebook)
 {
 	int choice = checkInputMembers(facebook);
 	
-	char* content;
+	string* content;
 	cout << "\nEnter content: \n";
 	content = getString();
-	Status* newStatus = new Status(content, Date(), Time());
-	facebook.findMember(choice)->addStatus(*newStatus);
+	Status* newStatus = new Status(*content, Date(), Time());
+	facebook.findMember(choice - 1)->addStatus(*newStatus);
 	delete newStatus;
 	delete content;
 }
@@ -215,52 +206,39 @@ void printFriendsChoices(Facebook& facebook)
 {
 	for (int i = 0; i < facebook.getNumOfMembers(); i++)
 	{
-		cout << i + 1 << " - " << facebook.findMember(i)->getName() << "\n";
+		cout << i + 1 << " - " << facebook.findMember(i)->getMemberName() << "\n";
 	}
 }
 
 // gets from user a string.
-// returns a dynamic string 
-char* getString()
+// returns a string 
+string* getString()
 {
-	int logSize = 0, phySize = 1;
-	char* name = new char[phySize];
-	char ch;
-	ch = getchar();
-	while (ch != '\n')
-	{
-		if (phySize == logSize)
-		{
-			phySize *= 2;
-			name = (char*)reallocArr(name, logSize, phySize, sizeof(char));
-		}
-		name[logSize] = ch;
-		logSize++;
-		ch = getchar();
-	}
-	name[logSize] = '\0';
-	return name;
+	string* str = new string();
+	getline(cin, *str);
+	return str;
 }
+
 
 // gets from user a page choice and shows all of his statuses.
 void showAllStastusOfPage(Facebook& facebook)
 {
 	int choice = checkInputFanPages(facebook);
-	facebook.getAllFanPages()[choice-1]->showAllStatus();
+	facebook.findFanPage(choice - 1)->showAllStatus();
 }
 
 // gets from user a member choice and shows all of his statuses.
 void showAllStatusOfMember(Facebook& facebook)
 {
 	int choice = checkInputMembers(facebook);
-	facebook.getAllMembers()[choice - 1]->showAllStatus();
+	facebook.findMember(choice - 1)->showAllStatus();
 }
 
 // gets from user a member choice and shows all of his friends 10 latest statuses.
 void showLatestStatusOfFriend(Facebook& facebook)
 {
 	int choice= checkInputMembers(facebook);
-	facebook.getAllMembers()[choice - 1]->showLatestFriendsStatus();
+	facebook.findMember(choice - 1)->showLatestFriendsStatus();
 }
 // gets from user two members and connect both of them as friends on facebook
 void makeFriends(Facebook& facebook)
@@ -273,8 +251,8 @@ void makeFriends(Facebook& facebook)
 		cin >> choice1>> choice2;
 	} while (choice2 == choice1 || choice2<1 || choice2>numOfMembers || choice1<1 || choice1>numOfMembers);
 
-	Member* temp1 = facebook.getAllMembers()[choice1 - 1];
-	Member* temp2 = facebook.getAllMembers()[choice2 - 1];
+	Member* temp1 = facebook.findMember(choice1 - 1);
+	Member* temp2 = facebook.findMember(choice2 - 1);
 	temp1->addFriend(temp2);
 }
 // gets from user two members and remove them from being friends on facebook.
@@ -283,9 +261,9 @@ void cancelFriendship(Facebook& facebook)
 	int choice1 = checkInputMembers(facebook);
 	int choice2;
 
-	Member* member1 = (Member*)*(facebook.getAllMembers().begin() + choice1 - 1);
+	Member* member1 = facebook.findMember(choice1 - 1);
 
-	int numOfMembers = member1->getAllMembers().size();
+	int numOfMembers = member1->getNumOfFriends();
 
 	if (numOfMembers > 0)
 	{
@@ -295,9 +273,7 @@ void cancelFriendship(Facebook& facebook)
 			cin >> choice2;
 			getchar();
 		} while (choice2<1 || choice2>numOfMembers);
-		Member* member2 = (Member*)*(member1->getAllMembers().begin() + choice2 - 1);
-		/*Member* temp1 = facebook.getAllMembers()[choice1 - 1];
-		Member* temp2 = facebook.getAllMembers()[choice1 - 1]->getAllMembers()[choice2 - 1];*/
+		Member* member2 = facebook.findMember(choice2 - 1);
 		member1->removeFriend(member2);
 	}
 	else
@@ -310,7 +286,10 @@ void addMemberToPage(Facebook& facebook)
 	int page = checkInputFanPages(facebook);
 	int member = checkInputMembers(facebook);
 	
-	facebook.getAllFanPages()[page - 1]->addFan(facebook.getAllMembers()[member - 1]);
+	FanPage* pageP = facebook.findFanPage(page - 1);
+	Member* memberP = facebook.findMember(member - 1);
+
+	facebook.addMemberToPage(*pageP, *memberP);
 }
 
 // gets a member and a fan page and removes the member from being a fan of the page.
@@ -318,8 +297,8 @@ void removeMemberFromPage(Facebook& facebook)
 {
 	int page, member;
 	page = checkInputFanPages(facebook);
-	FanPage* fanPageToRemoveFrom = (FanPage*)*(facebook.getAllFanPages().begin() + page - 1);
-	int numOfMembers = fanPageToRemoveFrom->getPageFans().size();
+	FanPage* fanPageToRemoveFrom = facebook.findFanPage(page - 1);
+	int numOfMembers = fanPageToRemoveFrom->getNumOfFans();
 	if (numOfMembers > 0)
 	{
 		do {
@@ -328,9 +307,8 @@ void removeMemberFromPage(Facebook& facebook)
 			cin >> member;
 			getchar();
 		} while (member<1 || member>numOfMembers);
-		Member* memberToRemove = (Member*)*(fanPageToRemoveFrom->getPageFans().begin() + member -1);
+		Member* memberToRemove = *(fanPageToRemoveFrom->getPageFans().begin() + (member - 1));
 		facebook.removeMemberFromPage(*fanPageToRemoveFrom, *memberToRemove);
-		
 	}
 	else
 		cout << "No fans";
@@ -360,13 +338,14 @@ void showAll(Facebook& facebook)
 void showMemberFriends(Facebook& facebook)
 {
 	int choice = checkInputMembers(facebook);
-	if (facebook.getAllMembers()[choice - 1]->getNumOfFriends() > 0)
+	Member* memberP = facebook.findMember(choice - 1);
+	if (memberP->getNumOfFriends() > 0)
 	{
-		facebook.getAllMembers()[choice - 1]->showAllFriends(false);
+		memberP->showAllFriends(false);
 	}
 	else
 	{
-		cout << facebook.getAllMembers()[choice - 1]->getName() << " has no friends";
+		cout << memberP->getMemberName() << " has no friends";
 	}
 }
 
@@ -379,10 +358,11 @@ void showPageFans(Facebook& facebook)
 		return;
 	}
 	int choice = checkInputFanPages(facebook);
-	if (facebook.getAllFanPages()[choice - 1]->getNumOfFans()== 0)
+	FanPage* pageP = facebook.findFanPage(choice - 1);
+	if (pageP->getNumOfFans() == 0)
 		cout << "No fans";
 	else
-		facebook.getAllFanPages()[choice - 1]->showAllFans(false);
+		pageP->showAllFans(false);
 }
 
 int checkInputMembers(Facebook& facebook)

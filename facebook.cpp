@@ -9,10 +9,10 @@ Facebook::Facebook()
 
 Facebook::~Facebook()
 {
-	vector<FanPage*>::const_iterator itr1 = _fanPages2.begin();
-	vector<FanPage*>::const_iterator itrEnd1 = _fanPages2.end();
-	vector<Member*>::const_iterator itr2 = _members2.begin();
-	vector<Member*>::const_iterator itrEnd2 = _members2.end();
+	vector<FanPage*>::const_iterator itr1 = _fanPages.begin();
+	vector<FanPage*>::const_iterator itrEnd1 = _fanPages.end();
+	vector<Member*>::const_iterator itr2 = _members.begin();
+	vector<Member*>::const_iterator itrEnd2 = _members.end();
 
 	for (; itr1 != itrEnd1; ++itr1)
 	{
@@ -26,12 +26,12 @@ Facebook::~Facebook()
 
 int Facebook::getNumOfMembers() const
 {
-	return _members2.size();
+	return (int)_members.size();
 }
 
 int Facebook::getNumOfPages() const
 {
-	return _fanPages2.size();
+	return (int)_fanPages.size();
 }
 
 // gets a ref to Member and adds it to facebook
@@ -39,8 +39,8 @@ bool Facebook::addMember(Member& newMember)
 {
 	if (!isNameMemberUsed(newMember))
 	{
-		 Member* memberToAdd = new Member(newMember.getName(), newMember.getMemberBirthDate());
-		_members2.push_back(memberToAdd);
+		 Member* memberToAdd = new Member(newMember.getMemberName(), newMember.getMemberBirthDate());
+		_members.push_back(memberToAdd);
 		return true;
 	}
 	return false;
@@ -52,7 +52,7 @@ bool Facebook::addPage(FanPage& newPage)
 	if (!isNameFanPageUsed(newPage))
 	{
 		FanPage* fanPageToAdd = new FanPage(newPage.getPageName());
-		_fanPages2.push_back(fanPageToAdd);
+		_fanPages.push_back(fanPageToAdd);
 		return true;
 	}
 	return false;
@@ -63,8 +63,8 @@ void Facebook::showMembers() const
 {
 	cout << "Members: \n";
 
-	vector<Member*>::const_iterator itr = _members2.begin();
-	vector<Member*>::const_iterator itrEnd = _members2.end();
+	vector<Member*>::const_iterator itr = _members.begin();
+	vector<Member*>::const_iterator itrEnd = _members.end();
 	if (itr == itrEnd)
 	{
 		cout << "No Members"<< endl;
@@ -80,8 +80,8 @@ void Facebook::showMembers() const
 void Facebook::showPages() const
 {
 	cout << "Pages: \n";
-	vector<FanPage*>::const_iterator itr = _fanPages2.begin();
-	vector<FanPage*>::const_iterator itrEnd = _fanPages2.end();
+	vector<FanPage*>::const_iterator itr = _fanPages.begin();
+	vector<FanPage*>::const_iterator itrEnd = _fanPages.end();
 	if (itr == itrEnd)
 	{
 		cout << "No Pages" << endl;
@@ -97,22 +97,22 @@ void Facebook::showPages() const
 // returns a const members arr
 vector<Member*> const Facebook::getAllMembers()
 {
-	return _members2;
+	return _members;
 }
 // return a const pages arr
 const vector<FanPage*> Facebook::getAllFanPages()
 {
-	return _fanPages2;
+	return _fanPages;
 }
 
 bool Facebook::isNameMemberUsed(Member& member)
 {
-	vector<Member*>::const_iterator itr = _members2.begin();
-	vector<Member*>::const_iterator itrEnd = _members2.end();
+	vector<Member*>::const_iterator itr = _members.begin();
+	vector<Member*>::const_iterator itrEnd = _members.end();
 
 	for (; itr != itrEnd; ++itr)
 	{
-		if (strcmp(member.getName(), (*itr)->getName()) == 0)
+		if (member.getMemberName() == (*itr)->getMemberName())
 			return true;
 	}
 	return false;
@@ -120,12 +120,12 @@ bool Facebook::isNameMemberUsed(Member& member)
 
 bool Facebook::isNameFanPageUsed(FanPage& fanPage)
 {
-	vector<FanPage*>::const_iterator itr = _fanPages2.begin();
-	vector<FanPage*>::const_iterator itrEnd = _fanPages2.end();
+	vector<FanPage*>::const_iterator itr = _fanPages.begin();
+	vector<FanPage*>::const_iterator itrEnd = _fanPages.end();
 
 	for (; itr != itrEnd; ++itr)
 	{
-		if (strcmp(fanPage.getPageName(), (*itr)->getPageName()) == 0)
+		if (fanPage.getPageName() == (*itr)->getPageName())
 			return true;
 	}
 	return false;
@@ -143,12 +143,17 @@ void Facebook::cancelFriendship(Member& mem1, Member& mem2)
 
 FanPage* Facebook::findFanPage(int index)
 {
-	vector<FanPage*>::iterator itr = _fanPages2.begin();
-	return (*itr) + index;
+	vector<FanPage*>::iterator itr = _fanPages.begin() + index;
+	return (*itr);
 }
 
 Member* Facebook::findMember(int index)
 {
-	vector<Member*>::iterator itr = _members2.begin();
-	return (*itr) + index;
+	vector<Member*>::iterator itr = _members.begin() + index;
+	return (*itr);
+}
+
+void Facebook::addMemberToPage(FanPage& page, Member& member)
+{
+	page.addFan(&member);
 }

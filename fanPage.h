@@ -2,18 +2,19 @@
 #define FAN_PAGE_H
 #include "status.h"
 #include "member.h"
+#include <string>
 #include <vector>
 class Member;
 
 class FanPage {
 private:
-	char* _pageName;
-	std::vector <Member*> _pageFans2;
-	std::vector<Status*> _pageStatus2;
+	std::string _pageName;
+	std::vector <Member*> _pageFans;
+	std::vector<Status*> _pageStatus;
 public:
-	FanPage(const char* pageName);
+	FanPage(std::string str);
 	~FanPage();
-	const char* getPageName();
+	std::string getPageName();
 	void addFan(Member* member);
 	void removeFan(Member* member);
 	void showAllFans(bool withIndex);

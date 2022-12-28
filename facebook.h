@@ -10,8 +10,8 @@
 
 class Facebook {
 private:
-	std::vector<Member*> _members2;
-	std::vector <FanPage*> _fanPages2;
+	std::vector<Member*> _members;
+	std::vector <FanPage*> _fanPages;
 
 public:
 	Facebook();
@@ -29,6 +29,7 @@ public:
 	bool isNameFanPageUsed(FanPage& fanPage);
 	void removeMemberFromPage(FanPage& page, Member& member);
 	void cancelFriendship(Member& mem1, Member& mem2);
+	void addMemberToPage(FanPage& page, Member& member);
 	FanPage* findFanPage(int index);
 	Member* findMember(int index);
 };

@@ -4,22 +4,23 @@
 #include <time.h>
 #include "date.h"
 #include "time.h"
+#include <string>
 class Status
 {
 private:
 	Date _statusDate;
 	Time _statusTime;
-	char* _content;
-
+	std::string _content;
 
 public:
-	Status(const char*,const  Date date,const Time time);
+	Status(std::string, const  Date date,const Time time);
 	Status(Status&) = delete;
-	const char* getContent() const;
+	std::string getContent() const;
 	const Date getDate() const;
 	const Time getTime() const;
 	void showStatus() const;
-	~Status();
+	bool operator== (const Status&) const;
+	bool operator!= (const Status&) const;
 };
 
 #endif // !STATUS_H

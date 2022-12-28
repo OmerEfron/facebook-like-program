@@ -4,21 +4,15 @@
 #include "status.h"
 #include <string.h>
 #include <iostream>
+#include <string>
 using namespace std;
 
-Status::Status(const char* content, const Date date, const Time time) : _statusDate(date), _statusTime(time)
+Status::Status(string str, const Date date, const Time time) : _statusDate(date), _statusTime(time)
 {
-	_content = new char[strlen(content) + 1];
-	strcpy(_content, content);
+	_content = str;
 }
 
-Status::~Status()
-{
-	delete[] _content;
-}
-
-
-const char* Status:: getContent() const
+string Status:: getContent() const
 {
 	return _content;
 }
@@ -38,3 +32,14 @@ void Status:: showStatus() const
 	_statusTime.showHour();
 	cout << "\n"<< _content;
 }
+
+bool Status:: operator== (const Status& other) const
+{
+	return other._content == this->_content;
+}
+
+bool Status:: operator!= (const Status& other) const
+{
+	return other._content != this->_content;
+}
+

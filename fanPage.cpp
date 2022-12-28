@@ -3,56 +3,54 @@
 #include "functions.h"
 #include <iostream>
 #include <string.h>
+#include <string>
 using namespace std;
 
 
-FanPage:: FanPage(const char* pageName)
+FanPage:: FanPage( string str)
 {
-	_pageName = new char[strlen(pageName)+1];
-	strcpy(_pageName, pageName);
-
+	_pageName = str;
 }
 
 FanPage:: ~FanPage()
 {
-	vector<Status*>::iterator itr = _pageStatus2.begin();
-	vector<Status*>::iterator itrEnd = _pageStatus2.end();
+	vector<Status*>::iterator itr = _pageStatus.begin();
+	vector<Status*>::iterator itrEnd = _pageStatus.end();
 	for (; itr != itrEnd; ++itr)
 	{
 		delete* itr;
 	}
-	delete[] _pageName;
 }
 
 // adds a new status to the page
 void FanPage:: addStatus(Status& status)
 {
 	Status* newStatus = new Status(status.getContent(), status.getDate(), status.getTime());
-	_pageStatus2.push_back(newStatus);
+	_pageStatus.push_back(newStatus);
 }
 
 // adds a new fan to the page.
 void FanPage::addFan(Member* fanToAdd)
 {
-	vector<Member*>::iterator itr = _pageFans2.begin();
-	vector<Member*>::iterator itrEnd = _pageFans2.end();
+	vector<Member*>::iterator itr = _pageFans.begin();
+	vector<Member*>::iterator itrEnd = _pageFans.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, fanToAdd);
 	if (tmp != itrEnd)
 		return;
 
-	_pageFans2.push_back(fanToAdd);
+	_pageFans.push_back(fanToAdd);
 	fanToAdd->addPage(this);
 }
 
 // removes a member from being a fan of the page
 void FanPage::removeFan(Member* fan)
 {
-	vector<Member*>::iterator itr = _pageFans2.begin();
-	vector<Member*>::iterator itrEnd = _pageFans2.end();
+	vector<Member*>::iterator itr = _pageFans.begin();
+	vector<Member*>::iterator itrEnd = _pageFans.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, fan);
 	if (tmp == itrEnd)
 		return;
-	_pageFans2.erase(tmp);
+	_pageFans.erase(tmp);
 	fan->removePage(this);
 }
 
@@ -60,8 +58,8 @@ void FanPage::removeFan(Member* fan)
 void FanPage::showAllFans(bool withIndex)
 {
 	cout << _pageName << " Fans: \n";
-	vector<Member*>::const_iterator itr = _pageFans2.begin();
-	vector<Member*>::const_iterator itrEnd = _pageFans2.end();
+	vector<Member*>::const_iterator itr = _pageFans.begin();
+	vector<Member*>::const_iterator itrEnd = _pageFans.end();
 	if (itr == itrEnd){
 		cout << "No Pages" << endl;
 	}
@@ -82,8 +80,8 @@ void FanPage::showAllFans(bool withIndex)
 // shows all of the statuses of the page.
 void FanPage::showAllStatus()
 {
-	vector<Status*>::const_iterator itr = _pageStatus2.begin();
-	vector<Status*>::const_iterator itrEnd = _pageStatus2.end();
+	vector<Status*>::const_iterator itr = _pageStatus.begin();
+	vector<Status*>::const_iterator itrEnd = _pageStatus.end();
 	for (; itr != itrEnd; ++itr)
 	{
 		(*itr)->showStatus();
@@ -92,19 +90,19 @@ void FanPage::showAllStatus()
 
 }
 
-const char* FanPage:: getPageName()
+string FanPage:: getPageName()
 {
 	return _pageName;
 }
 
 int FanPage:: getNumOfFans() const
 {
-	return _pageFans2.size();
+	return (int)_pageFans.size();
 }
 
 vector<Member*> const FanPage::getPageFans()
 {
-	return _pageFans2;
+	return _pageFans;
 }
 
 bool FanPage:: operator>(const FanPage& other)const
