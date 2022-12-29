@@ -38,3 +38,15 @@ void Date::showDate() const
 {
 	cout << _day << "." << _month << "." << _year;
 }
+
+bool Date::isValid() const
+{
+	if (_day < 1 || _day > 31)
+		return false;
+	else if (_month < 1 || _month > 12)
+		return false;
+	else if (_year < 1902 || _year > 2008) // age limit
+		return false;
+	else
+		return true;
+}

@@ -5,6 +5,7 @@
 #include "date.h"
 #include "status.h"
 #include "fanPage.h"
+#include "memberException.h"
 #include <string>
 #include <vector>
 const int NOT_FOUND = -1;
@@ -24,6 +25,7 @@ public:
 	Member(const Member&) = delete;
 	~Member();
 	
+	std::vector<Member*>::iterator isMemberFriend(Member&);
 	void addFriend(Member* friendToAdd);
 	void removeFriend(Member* friendToRemove);
 	void addPage(FanPage* fanPageToAdd);

@@ -33,10 +33,10 @@
     <ClInclude Include="facebook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="listOfStatus.h">
+    <ClInclude Include="functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="functions.h">
+    <ClInclude Include="memberException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,13 +59,13 @@
     <ClCompile Include="facebook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="listOfStatus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fanPage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="memberException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

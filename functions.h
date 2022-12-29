@@ -15,7 +15,7 @@ void displayMenu();
 
 bool getChoice(Facebook& facebook);
 
-void addNewMember(Facebook& facebook);
+void addNewMember(Facebook& facebook) noexcept(false);
 std::string* getString();
 void addNewFanPage(Facebook& facebook);
 void addStatusToPage(Facebook& facebook);

@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "memberException.h"
 #include <string.h>
 #include <string>
 #include <iostream>
@@ -128,7 +129,7 @@ bool getChoice(Facebook& facebook)
 // adds a new member to facebook. 
 // gets from user the name and birthdate.
 // if there is already a member in facebook with same name, free the name and the new member.
-void addNewMember(Facebook& facebook)
+void addNewMember(Facebook& facebook) noexcept(false)
 {
 	int day, month, year;
 	string* name;
@@ -137,9 +138,21 @@ void addNewMember(Facebook& facebook)
 	cout << "Please enter:\nDay Month Year, seperated with white space\n";
 	cin >> day >> month >> year;
 	Member* member = new Member(*name, Date(day, month, year));
-	if (!facebook.addMember(*member))
+	try
 	{
-		cout << "There is already a member with " << *name << " as his name";
+		facebook.addMember(*member);
+	}
+	catch (DuplicateNameException& dupName)
+	{
+		cout << dupName.what();
+	}
+	catch (InvalidBirthDate& invDate)
+	{
+		cout << invDate.what();
+	}
+	catch (...)
+	{
+		cout << "something wrong. try again";
 	}
 	delete member;
 	delete name;
@@ -245,15 +258,20 @@ void makeFriends(Facebook& facebook)
 {
 	int choice1, choice2;
 	int numOfMembers = facebook.getNumOfMembers();
-	do{
-		cout << "Please choose two members:\n";
-		printFriendsChoices(facebook);
-		cin >> choice1>> choice2;
-	} while (choice2 == choice1 || choice2<1 || choice2>numOfMembers || choice1<1 || choice1>numOfMembers);
-
-	Member* temp1 = facebook.findMember(choice1 - 1);
-	Member* temp2 = facebook.findMember(choice2 - 1);
-	temp1->addFriend(temp2);
+	cout << "Please choose two members:\n";
+	printFriendsChoices(facebook);
+	cin >> choice1 >> choice2;
+	try
+	{
+		Member* temp1 = facebook.findMember(choice1 - 1);
+		Member* temp2 = facebook.findMember(choice2 - 1);
+		/*temp1->addFriend(temp2);*/
+		facebook.makeFriends(*temp1, *temp2);
+	}
+	catch(AddingMemberToHimself& exp)
+	{
+		cout << exp.what()<<endl;
+	}
 }
 // gets from user two members and remove them from being friends on facebook.
 void cancelFriendship(Facebook& facebook)

@@ -45,9 +45,19 @@ int Member:: getNumOfStatuses()
 	return _memberStatus.size();
 }
 
+
+vector<Member*>::iterator Member::isMemberFriend(Member& friendToCheck)
+{
+	vector<Member*>::iterator itr = _memberFriends.begin();
+	vector<Member*>::iterator itrEnd = _memberFriends.end();
+	vector<Member*>::iterator tmp = find(itr, itrEnd, &friendToCheck);
+	return tmp;
+}
+
 // add friendToAdd address to this members friends arr.
 void Member::addFriend(Member* friendToAdd)
 {
+	
 	vector<Member*>::iterator itr = _memberFriends.begin();
 	vector<Member*>::iterator itrEnd = _memberFriends.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, friendToAdd);

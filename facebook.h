@@ -4,6 +4,7 @@
 
 #include "member.h"
 #include "fanPage.h"
+#include "memberException.h"
 #include <vector>
 
 
@@ -19,8 +20,9 @@ public:
 	~Facebook();
 	int getNumOfMembers() const;
 	int getNumOfPages() const;
-	bool addMember(Member& newMember);
+	void addMember(Member& newMember) noexcept(false);
 	bool addPage(FanPage& newPage);
+	void addStatusToMember(Member& member, Status& status);
 	void showMembers() const;
 	void showPages() const;
 	std::vector<Member*> const getAllMembers();
@@ -32,6 +34,7 @@ public:
 	void addMemberToPage(FanPage& page, Member& member);
 	FanPage* findFanPage(int index);
 	Member* findMember(int index);
+	void makeFriends(Member& member1, Member& member2);
 };
 #endif // !FACEBOOK_H
 

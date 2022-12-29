@@ -1,5 +1,6 @@
 #include "facebook.h"
 #include "functions.h"
+
 #include <iostream>
 using namespace std;
 
@@ -35,15 +36,21 @@ int Facebook::getNumOfPages() const
 }
 
 // gets a ref to Member and adds it to facebook
-bool Facebook::addMember(Member& newMember)
+void Facebook::addMember(Member& newMember) noexcept(false)
 {
-	if (!isNameMemberUsed(newMember))
+	if (isNameMemberUsed(newMember))
 	{
-		 Member* memberToAdd = new Member(newMember.getMemberName(), newMember.getMemberBirthDate());
-		_members.push_back(memberToAdd);
-		return true;
+		throw DuplicateNameException(newMember.getMemberName());
 	}
-	return false;
+	else if (!(newMember.getMemberBirthDate().isValid()))
+	{
+		throw InvalidBirthDate();
+	}
+	else
+	{
+		Member* memberToAdd = new Member(newMember.getMemberName(), newMember.getMemberBirthDate());
+		_members.push_back(memberToAdd);
+	}
 }
 
 // gets a ref to FanPage and adds it to facebook
@@ -156,4 +163,18 @@ Member* Facebook::findMember(int index)
 void Facebook::addMemberToPage(FanPage& page, Member& member)
 {
 	page.addFan(&member);
+}
+
+
+void Facebook::addStatusToMember(Member& member, Status& status)
+{
+	member.addStatus(status);
+}
+
+
+void Facebook::makeFriends(Member& member1, Member& member2) noexcept(false)
+{
+	if (member1.getMemberName() == member2.getMemberName())
+		throw AddingMemberToHimself();
+	member1.addFriend(&member2);
 }
