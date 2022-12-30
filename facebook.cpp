@@ -8,6 +8,8 @@ Facebook::Facebook()
 {
 }
 
+// d'tor for Facebook class
+// delete all members and pages allocations. 
 Facebook::~Facebook()
 {
 	vector<FanPage*>::const_iterator itr1 = _fanPages.begin();
@@ -102,17 +104,17 @@ void Facebook::showPages() const
 }
 
 // returns a const members arr
-vector<Member*> const Facebook::getAllMembers()
+vector<Member*> const Facebook::getAllMembers() const
 {
-	return _members;
+	return (const vector<Member*>)_members;
 }
 // return a const pages arr
-const vector<FanPage*> Facebook::getAllFanPages()
+const vector<FanPage*> Facebook::getAllFanPages() const
 {
-	return _fanPages;
+	return (const vector<FanPage*>)_fanPages;
 }
 
-bool Facebook::isNameMemberUsed(Member& member)
+bool Facebook::isNameMemberUsed(Member& member) const
 {
 	vector<Member*>::const_iterator itr = _members.begin();
 	vector<Member*>::const_iterator itrEnd = _members.end();
@@ -125,7 +127,8 @@ bool Facebook::isNameMemberUsed(Member& member)
 	return false;
 }
 
-bool Facebook::isNameFanPageUsed(FanPage& fanPage)
+// a boolean function that get a ref to fanPage and returns true if the name of the fanPage's name is taken.
+bool Facebook::isNameFanPageUsed(FanPage& fanPage) const
 {
 	vector<FanPage*>::const_iterator itr = _fanPages.begin();
 	vector<FanPage*>::const_iterator itrEnd = _fanPages.end();
@@ -138,43 +141,83 @@ bool Facebook::isNameFanPageUsed(FanPage& fanPage)
 	return false;
 }
 
+// gets a ref to fanPage and a ref to Member and removes the member from being a fan of the fan page
+// if the member is not a fan of page, throws an exception.
 void Facebook:: removeMemberFromPage(FanPage& page, Member& member)
 {
+	// exception
 	page.removeFan(&member);
 }
 
+// gets two refs to Member and cancel their friendship.
+// if they are not friends, throws an exception.
 void Facebook::cancelFriendship(Member& mem1, Member& mem2)
 {
+	//exception
 	mem1.removeFriend(&mem2);
 }
 
+// a function that gets an index of a fanPage* and returns the element.
+// if the index isn't in range of the size of the vector throws an exception
 FanPage* Facebook::findFanPage(int index)
 {
 	vector<FanPage*>::iterator itr = _fanPages.begin() + index;
 	return (*itr);
+	//exception
 }
 
+// a function that gets an index of a fanPage* and returns the element.
+// if the index isn't in range of the size of the vector throws an exception
 Member* Facebook::findMember(int index)
 {
+	//exception
 	vector<Member*>::iterator itr = _members.begin() + index;
 	return (*itr);
 }
 
+// gets a ref to fanPage and Member and adds the member to be a fan of the page.
 void Facebook::addMemberToPage(FanPage& page, Member& member)
 {
 	page.addFan(&member);
 }
 
-
+// gets a ref to status and member and adds the status to the member statuses.
 void Facebook::addStatusToMember(Member& member, Status& status)
 {
+
+	//exception
 	member.addStatus(status);
 }
 
-
+// gets two refs of members and make them friends
+// if member1 and member2 are same member, throws an exception
 void Facebook::makeFriends(Member& member1, Member& member2) noexcept(false)
 {
 	if (member1.getMemberName() == member2.getMemberName())
 		throw AddingMemberToHimself();
 	member1.addFriend(&member2);
+}
+
+
+FanPage* Facebook::findFanPage(FanPage& fanPage)
+{
+	vector<FanPage*>::iterator itr = _fanPages.begin();
+	vector<FanPage*>::iterator itrEnd = _fanPages.end();
+	vector<FanPage*>::iterator tmp = find(itr, itrEnd, &fanPage);
+
+	if (tmp != itrEnd)
+		return *tmp;
+	return nullptr;
+}
+
+
+Member* Facebook::findMember(Member& member)
+{
+	vector<Member*>::iterator itr = _members.begin();
+	vector<Member*>::iterator itrEnd = _members.end();
+	vector<Member*>::iterator tmp = find(itr, itrEnd, &member);
+
+	if (tmp != itrEnd)
+		return *tmp;
+	return nullptr;
 }

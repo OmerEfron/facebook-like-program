@@ -25,15 +25,17 @@ public:
 	void addStatusToMember(Member& member, Status& status);
 	void showMembers() const;
 	void showPages() const;
-	std::vector<Member*> const getAllMembers();
-	const std::vector<FanPage*>  getAllFanPages();
-	bool isNameMemberUsed(Member& member);
-	bool isNameFanPageUsed(FanPage& fanPage);
+	const std::vector<Member*> getAllMembers() const;
+	const std::vector<FanPage*>  getAllFanPages() const;
+	bool isNameMemberUsed(Member& member) const;
+	bool isNameFanPageUsed(FanPage& fanPage) const;
 	void removeMemberFromPage(FanPage& page, Member& member);
 	void cancelFriendship(Member& mem1, Member& mem2);
 	void addMemberToPage(FanPage& page, Member& member);
 	FanPage* findFanPage(int index);
+	FanPage* findFanPage(FanPage& fanPage);
 	Member* findMember(int index);
+	Member* findMember(Member& member);
 	void makeFriends(Member& member1, Member& member2);
 };
 #endif // !FACEBOOK_H

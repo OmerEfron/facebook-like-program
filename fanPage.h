@@ -23,6 +23,7 @@ public:
 	int getNumOfFans()const;
 	std::vector<Member*> const getPageFans();
 	bool operator>(const FanPage& other)const;
+	bool operator>(const Member& other)const;
 
 };
 #endif // !FAN_PAGE_H

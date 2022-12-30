@@ -40,24 +40,15 @@ bool Member:: operator>(const Member& other) const
 	return getNumOfFriends() > other.getNumOfFriends();
 }
 
-int Member:: getNumOfStatuses()
+int Member:: getNumOfStatuses() const
 {
 	return _memberStatus.size();
-}
-
-
-vector<Member*>::iterator Member::isMemberFriend(Member& friendToCheck)
-{
-	vector<Member*>::iterator itr = _memberFriends.begin();
-	vector<Member*>::iterator itrEnd = _memberFriends.end();
-	vector<Member*>::iterator tmp = find(itr, itrEnd, &friendToCheck);
-	return tmp;
 }
 
 // add friendToAdd address to this members friends arr.
 void Member::addFriend(Member* friendToAdd)
 {
-	
+
 	vector<Member*>::iterator itr = _memberFriends.begin();
 	vector<Member*>::iterator itrEnd = _memberFriends.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, friendToAdd);
@@ -127,10 +118,10 @@ Date Member:: getMemberBirthDate() const
 	return _dateOfBirth;
 }
 
-void Member::showAllFriends(bool withIndex)
+void Member::showAllFriends(bool withIndex) const
 {
-	vector<Member*>::iterator itr = _memberFriends.begin();
-	vector<Member*>::iterator itrEnd = _memberFriends.end();
+	vector<Member*>::const_iterator itr = _memberFriends.begin();
+	vector<Member*>::const_iterator itrEnd = _memberFriends.end();
 
 	if (withIndex) {
 		for (int i = 1; itr != itrEnd; ++itr, ++i)
@@ -142,10 +133,10 @@ void Member::showAllFriends(bool withIndex)
 	}
 }
 
-void Member::showAllFanpages(bool withIndex)
+void Member::showAllFanpages(bool withIndex) const
 {
-	vector<FanPage*>::iterator itr = _memberFanPages.begin();
-	vector<FanPage*>::iterator itrEnd = _memberFanPages.end();
+	vector<FanPage*>::const_iterator itr = _memberFanPages.begin();
+	vector<FanPage*>::const_iterator itrEnd = _memberFanPages.end();
 	if (withIndex) {
 		for (int i = 1; itr != itrEnd; ++itr, ++i)
 			cout << i << ". " << (*itr)->getPageName() << "\n";
@@ -157,10 +148,10 @@ void Member::showAllFanpages(bool withIndex)
 }
 
 // shows the last max 10 statuses of this member's friends.
-void Member::showLatestFriendsStatus()
+void Member::showLatestFriendsStatus() const
 {
-	vector<Member*>::iterator itr1 = _memberFriends.begin();
-	vector<Member*>::iterator itrEnd1 = _memberFriends.end();
+	vector<Member*>::const_iterator itr1 = _memberFriends.begin();
+	vector<Member*>::const_iterator itrEnd1 = _memberFriends.end();
 	vector<Status*>::const_iterator itr2;
 	vector<Status*>::const_iterator itrEnd2;
 	cout << _memberName << " friends latest statuses: \n\n";
@@ -192,4 +183,9 @@ int Member::getNumOfFriends() const
 vector<Member*> const Member::getAllMembers()
 {
 	return _memberFriends;
+}
+
+bool Member:: operator>(const FanPage& other) const
+{
+	return getNumOfFriends() > other.getNumOfFans();
 }

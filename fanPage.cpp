@@ -109,3 +109,8 @@ bool FanPage:: operator>(const FanPage& other)const
 {
 	return getNumOfFans() > other.getNumOfFans();
 }
+
+bool FanPage:: operator>(const Member& other)const
+{
+	return getNumOfFans() > other.getNumOfFriends();
+}

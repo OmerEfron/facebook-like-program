@@ -13,7 +13,7 @@ private:
 	std::string _content;
 
 public:
-	Status(std::string, const  Date date,const Time time);
+	Status(std::string, const Date date,const Time time);
 	Status(Status&) = delete;
 	std::string getContent() const;
 	const Date getDate() const;
