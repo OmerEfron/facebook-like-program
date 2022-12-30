@@ -26,8 +26,6 @@ public:
 	void addStatusToFanPage(FanPage& fanPage, Status& status) noexcept(false);
 	void showMembers(bool index) const;
 	void showPages(bool index) const;
-	const std::vector<Member*> getAllMembers() const; // not used
-	const std::vector<FanPage*>  getAllFanPages() const; // not used
 	bool isNameMemberUsed(Member& member) const;
 	bool isNameFanPageUsed(FanPage& fanPage) const;
 	void removeMemberFromPage(FanPage& page, Member& member) noexcept(false);

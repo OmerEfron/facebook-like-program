@@ -52,7 +52,6 @@ int main()
 	facebook.addMemberToPage(*page2, *member1);
 	facebook.addMemberToPage(*page2, *member4);
 
-
 	cout << "Welcome to FACEBOOK\n----------------------\nPlease choose one of the following:\n";
 	while (getChoice(facebook))
 	{

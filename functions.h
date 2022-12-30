@@ -12,16 +12,12 @@
 class Facebook;
 
 void displayMenu();
-
 bool getChoice(Facebook& facebook);
-
 void addNewMember(Facebook& facebook);
 std::string* getString();
 void addNewFanPage(Facebook& facebook);
 void addStatusToPage(Facebook& facebook);
 void addStatusToMember(Facebook& facebook);
-void printFanPagesChoices(Facebook& facebook);
-void printFriendsChoices(Facebook& facebook);
 void showAllStatusOfMember(Facebook& facebook);
 void showAllStastusOfPage(Facebook& facebook);
 void showLatestStatusOfFriend(Facebook& facebook);
@@ -32,6 +28,4 @@ void removeMemberFromPage(Facebook& facebook);
 void showAll(Facebook& facebook);
 void showMemberFriends(Facebook& facebook);
 void showPageFans(Facebook& facebook);
-int checkInputMembers(Facebook& facebook);
-int checkInputFanPages(Facebook& facebook);
 #endif // !FUNCTIONS_H

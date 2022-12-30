@@ -115,16 +115,7 @@ void Facebook::showPages(bool index) const
 
 }
 
-// returns a const members arr
-vector<Member*> const Facebook::getAllMembers() const
-{
-	return (const vector<Member*>)_members;
-}
-// return a const pages arr
-const vector<FanPage*> Facebook::getAllFanPages() const
-{
-	return (const vector<FanPage*>)_fanPages;
-}
+
 
 bool Facebook::isNameMemberUsed(Member& member) const
 {

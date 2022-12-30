@@ -255,32 +255,6 @@ void addStatusToMember(Facebook& facebook)
 		delete content;
 }
 
-// print the fan pages with fixed indexes
-void printFanPagesChoices(Facebook& facebook)//
-{
-	int numOfPages = facebook.getNumOfPages();
-	if (numOfPages == 0)
-		cout << "no fan pages";
-	else {
-		for (int i = 0; i < numOfPages; i++)
-		{
-			cout << i + 1 << " - " << facebook.findFanPage(i)->getPageName() << "\n";
-		}
-	}
-}
-// print the members with fixed indexes
-void printFriendsChoices(Facebook& facebook)//
-{
-	int numOfMembers = facebook.getNumOfMembers();
-	if (numOfMembers == 0)
-		cout << "no members";
-	else {
-		for (int i = 0; i < numOfMembers; i++)
-		{
-			cout << i + 1 << " - " << facebook.findMember(i)->getMemberName() << "\n";
-		}
-	}
-}
 
 // gets from user a string.
 // returns a string 
@@ -584,27 +558,3 @@ void showPageFans(Facebook& facebook)
 	}
 }
 
-int checkInputMembers(Facebook& facebook)//
-{
-	int choice;
-	int numOfMembers = facebook.getNumOfMembers();
-	do {
-		cout << "Please choose the one member:\n";
-		printFriendsChoices(facebook);
-		cin >> choice;
-		getchar();
-	} while (choice<1 || choice>numOfMembers);
-	return choice;
-}
-int checkInputFanPages(Facebook& facebook)//
-{
-	int choice;
-	int numOfPages = facebook.getNumOfPages();
-	do {
-		cout << "Please choose one fan page:\n";
-		printFanPagesChoices(facebook);
-		cin >> choice;
-		getchar();
-	} while (choice<1 || choice>numOfPages);
-	return choice;
-}
