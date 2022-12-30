@@ -13,7 +13,7 @@ Date::Date()
 	_year = localtm->tm_year + 1900;
 }
 
-Date::Date(int day, int month, int year)
+Date::Date(int day, int month, int year) //exception
 {
 	_day = day;
 	_month = month;

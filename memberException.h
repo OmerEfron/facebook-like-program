@@ -1,29 +1,17 @@
 #ifndef MEMBER_EXCEPTION
 #define MEMBER_EXCEPTION
 #include <string>
+#include "UserException.h"
 
-class MemberException
-{ 
-public:
-	virtual std::string what() const;
-};
 
-class DuplicateNameException : public MemberException
-{
-private:
-	std::string message;
-public:
-	DuplicateNameException(std::string name);
-	virtual std::string what() const;
-};
-
-class AddingMemberToHimself : public MemberException
+class MemberToHimself : public UserException
 {
 public:
-	virtual std::string what() const;
+	std::string addMemberToHimself() const;
+	std::string removeMemberToHimself() const;
 };
 
-class InvalidBirthDate : public MemberException
+class InvalidBirthDate : public UserException
 {
 
 public:
@@ -31,4 +19,6 @@ public:
 };
 
 
-#endif // !MEMBER_EXCEPTION
+
+
+#endif //!MEMBER_EXCEPTION

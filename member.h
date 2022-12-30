@@ -26,11 +26,11 @@ public:
 	Member(const Member&) = delete;
 	~Member();
 	
-	void addFriend(Member* friendToAdd);
-	void removeFriend(Member* friendToRemove);
-	void addPage(FanPage* fanPageToAdd);
-	void removePage(FanPage* fanPageToRemove);
-	void addStatus(Status& statusToAdd);
+	void addFriend(Member* friendToAdd) noexcept(false);
+	void removeFriend(Member* friendToRemove) noexcept(false);
+	void addPage(FanPage* fanPageToAdd) noexcept(false);
+	void removePage(FanPage* fanPageToRemove) noexcept(false);
+	void addStatus(Status& statusToAdd); 
 	std::string getMemberName() const;
 	int getNumOfStatuses() const;
 	Date getMemberBirthDate() const;
@@ -39,7 +39,7 @@ public:
 	void showAllFriends(bool withIndex) const;
 	void showLatestFriendsStatus() const;
 	int getNumOfFriends()const;
-	std::vector<Member*> const getAllMembers();
+	std::vector<Member*> const getAllMembers(); // not use//
 	void operator+=(Member& memberToAdd);
 	bool operator>(const Member& other) const;
 	bool operator>(const FanPage& other) const;

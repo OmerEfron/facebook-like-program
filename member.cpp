@@ -46,8 +46,12 @@ int Member:: getNumOfStatuses() const
 }
 
 // add friendToAdd address to this members friends arr.
-void Member::addFriend(Member* friendToAdd)
+void Member::addFriend(Member* friendToAdd) noexcept(false)
 {
+	if (this == friendToAdd)
+		throw MemberToHimself();
+	else if (friendToAdd == nullptr)
+		throw NullUser();
 
 	vector<Member*>::iterator itr = _memberFriends.begin();
 	vector<Member*>::iterator itrEnd = _memberFriends.end();
@@ -60,8 +64,13 @@ void Member::addFriend(Member* friendToAdd)
 }
 
 // removes the friendToRemove address from this member friends arr.
-void  Member:: removeFriend(Member* friendToRemove)
+void  Member:: removeFriend(Member* friendToRemove) noexcept(false)
 {
+	if (friendToRemove == nullptr)
+		throw NullUser();
+	else if (this == friendToRemove)
+		throw MemberToHimself();
+
 	vector<Member*>::iterator itr = _memberFriends.begin();
 	vector<Member*>::iterator itrEnd = _memberFriends.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, friendToRemove);
@@ -72,8 +81,11 @@ void  Member:: removeFriend(Member* friendToRemove)
 }
 
 // add the fanPageToAdd address to this member pages arr.
-void Member::addPage(FanPage* fanPageToAdd)
+void Member::addPage(FanPage* fanPageToAdd) noexcept(false)
 {
+	if (fanPageToAdd == nullptr)
+		throw NullUser();
+
 	vector<FanPage*>::iterator itr = _memberFanPages.begin();
 	vector<FanPage*>::iterator itrEnd = _memberFanPages.end();
 	vector<FanPage*>::iterator tmp = find(itr, itrEnd, fanPageToAdd);
@@ -85,8 +97,11 @@ void Member::addPage(FanPage* fanPageToAdd)
 }
 
 // removes fanPageToRemove from this member pages arr.
-void Member:: removePage(FanPage* fanPageToRemove)
+void Member:: removePage(FanPage* fanPageToRemove) noexcept(false)
 {
+	if (fanPageToRemove == nullptr)
+		throw NullUser();
+
 	vector<FanPage*>::iterator itr = _memberFanPages.begin();
 	vector<FanPage*>::iterator itrEnd = _memberFanPages.end();
 	vector<FanPage*>::iterator tmp = find(itr, itrEnd, fanPageToRemove);

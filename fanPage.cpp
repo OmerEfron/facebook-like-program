@@ -30,8 +30,11 @@ void FanPage:: addStatus(Status& status)
 }
 
 // adds a new fan to the page.
-void FanPage::addFan(Member* fanToAdd)
+void FanPage::addFan(Member* fanToAdd) noexcept(false)
 {
+	if (fanToAdd == nullptr)
+		throw NullUser();
+
 	vector<Member*>::iterator itr = _pageFans.begin();
 	vector<Member*>::iterator itrEnd = _pageFans.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, fanToAdd);
@@ -43,8 +46,11 @@ void FanPage::addFan(Member* fanToAdd)
 }
 
 // removes a member from being a fan of the page
-void FanPage::removeFan(Member* fan)
+void FanPage::removeFan(Member* fan) noexcept(false)
 {
+	if (fan == nullptr)
+		throw NullUser();
+
 	vector<Member*>::iterator itr = _pageFans.begin();
 	vector<Member*>::iterator itrEnd = _pageFans.end();
 	vector<Member*>::iterator tmp = find(itr, itrEnd, fan);

@@ -1,26 +1,14 @@
 #include "memberException.h"
 #include <string>
 using namespace std;
-string MemberException::what() const
-{
-	return string("Error while adding member to facebook.");
-}
 
-DuplicateNameException::DuplicateNameException(string name)
+string MemberToHimself::addMemberToHimself() const
 {
-	message = string();
-	message.append(name);
-	message.append(" is already on facebook");
+	return "cannot add member to himself";
 }
-
-string DuplicateNameException::what() const
+string MemberToHimself::removeMemberToHimself() const
 {
-	return message;
-}
-
-string AddingMemberToHimself:: what() const
-{
-	return "cannot adding member to himself";
+	return "cannot remove member from himself";
 }
 
 string InvalidBirthDate::what() const

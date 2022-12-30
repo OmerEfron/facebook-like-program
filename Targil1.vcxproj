@@ -147,6 +147,7 @@
     <ClInclude Include="fanPage.h" />
     <ClInclude Include="member.h" />
     <ClInclude Include="status.h" />
+    <ClInclude Include="userException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="facebook.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="member.cpp" />
     <ClCompile Include="memberException.cpp" />
+    <ClCompile Include="userException.cpp" />
     <ClCompile Include="status.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="date.cpp" />

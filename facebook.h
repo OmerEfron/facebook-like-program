@@ -21,22 +21,25 @@ public:
 	int getNumOfMembers() const;
 	int getNumOfPages() const;
 	void addMember(Member& newMember) noexcept(false);
-	bool addPage(FanPage& newPage);
-	void addStatusToMember(Member& member, Status& status);
-	void showMembers() const;
-	void showPages() const;
-	const std::vector<Member*> getAllMembers() const;
-	const std::vector<FanPage*>  getAllFanPages() const;
+	bool addPage(FanPage& newPage)noexcept(false);
+	void addStatusToMember(Member& member, Status& status) noexcept(false);
+	void addStatusToFanPage(FanPage& fanPage, Status& status) noexcept(false);
+	void showMembers(bool index) const;
+	void showPages(bool index) const;
+	const std::vector<Member*> getAllMembers() const; // not used
+	const std::vector<FanPage*>  getAllFanPages() const; // not used
 	bool isNameMemberUsed(Member& member) const;
 	bool isNameFanPageUsed(FanPage& fanPage) const;
-	void removeMemberFromPage(FanPage& page, Member& member);
-	void cancelFriendship(Member& mem1, Member& mem2);
-	void addMemberToPage(FanPage& page, Member& member);
-	FanPage* findFanPage(int index);
-	FanPage* findFanPage(FanPage& fanPage);
-	Member* findMember(int index);
+	void removeMemberFromPage(FanPage& page, Member& member) noexcept(false);
+	void cancelFriendship(Member& mem1, Member& mem2) noexcept(false);
+	void addMemberToPage(FanPage& page, Member& member) noexcept(false);
+	FanPage* findFanPage(int index)noexcept(false);
+	FanPage* findFanPage(FanPage& fanPage); 
+	Member* findMember(int index) noexcept(false);
 	Member* findMember(Member& member);
-	void makeFriends(Member& member1, Member& member2);
+	void makeFriends(Member& member1, Member& member2) noexcept(false);
+	void showMemberFriend();
+
 };
 #endif // !FACEBOOK_H
 

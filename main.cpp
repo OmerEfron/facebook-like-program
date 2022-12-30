@@ -16,7 +16,7 @@ int main()
 	"Efron The King", "Shaf Shaf 6", "MHOD", "THIS IS TERNER"};
 	char fanPageStr[2][11] = { "Green Apes" , "Vasermilia"};;
 	Member efron(name[1], Date(22, 7, 1997));
-	Member shafir(name[0], Date(2, 5, 1998));
+	Member shafir(name[0], Date(9, 6, 1997));
 	Member ohad(name[2], Date(1, 1, 1997));
 	Member roni(name[3], Date(2, 2, 1997));
 	Status status1(statusStr[0], Date(), Time());

@@ -15,8 +15,8 @@ public:
 	FanPage(std::string str);
 	~FanPage();
 	std::string getPageName();
-	void addFan(Member* member);
-	void removeFan(Member* member);
+	void addFan(Member* member)noexcept(false);
+	void removeFan(Member* member)noexcept(false);
 	void showAllFans(bool withIndex);
 	void showAllStatus();
 	void addStatus(Status&);

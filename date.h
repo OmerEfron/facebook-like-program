@@ -14,6 +14,5 @@ public:
 	int getYear()const;
 	void showDate() const;
 	bool isValid() const;
-
 };
 #endif // !DATE_H

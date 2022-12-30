@@ -56,9 +56,11 @@ void Facebook::addMember(Member& newMember) noexcept(false)
 }
 
 // gets a ref to FanPage and adds it to facebook
-bool Facebook::addPage(FanPage& newPage)
+bool Facebook::addPage(FanPage& newPage) noexcept(false)
 {
-	if (!isNameFanPageUsed(newPage))
+	if (isNameFanPageUsed(newPage))
+		throw DuplicateNameException(newPage.getPageName());
+	else
 	{
 		FanPage* fanPageToAdd = new FanPage(newPage.getPageName());
 		_fanPages.push_back(fanPageToAdd);
@@ -68,7 +70,7 @@ bool Facebook::addPage(FanPage& newPage)
 }
 
 // shows all members in facebook.
-void Facebook::showMembers() const
+void Facebook::showMembers(bool index) const
 {
 	cout << "Members: \n";
 
@@ -78,6 +80,11 @@ void Facebook::showMembers() const
 	{
 		cout << "No Members"<< endl;
 	}
+	else if(index)
+	{
+		for (int i=1; itr != itrEnd;++i, ++itr)
+			cout << i << ". " << (*itr)->getMemberName() << endl;
+	}
 	else
 	{
 		for (; itr != itrEnd; ++itr)
@@ -86,7 +93,7 @@ void Facebook::showMembers() const
 }
 
 // shows all pages in facebook
-void Facebook::showPages() const
+void Facebook::showPages(bool index) const
 {
 	cout << "Pages: \n";
 	vector<FanPage*>::const_iterator itr = _fanPages.begin();
@@ -94,6 +101,11 @@ void Facebook::showPages() const
 	if (itr == itrEnd)
 	{
 		cout << "No Pages" << endl;
+	}
+	else if(index)
+	{
+		for (int i = 1; itr != itrEnd; ++i, ++itr)
+			cout << i << ". " << (*itr)->getPageName() << endl;
 	}
 	else
 	{
@@ -143,24 +155,31 @@ bool Facebook::isNameFanPageUsed(FanPage& fanPage) const
 
 // gets a ref to fanPage and a ref to Member and removes the member from being a fan of the fan page
 // if the member is not a fan of page, throws an exception.
-void Facebook:: removeMemberFromPage(FanPage& page, Member& member)
+void Facebook:: removeMemberFromPage(FanPage& page, Member& member) noexcept(false)
 {
-	// exception
+	if (!findFanPage(page) || !findMember(member))
+		throw UserNotFound();
+
 	page.removeFan(&member);
 }
 
 // gets two refs to Member and cancel their friendship.
 // if they are not friends, throws an exception.
-void Facebook::cancelFriendship(Member& mem1, Member& mem2)
+void Facebook::cancelFriendship(Member& mem1, Member& mem2) noexcept(false)
 {
-	//exception
+	if (!findMember(mem2) || !findMember(mem1))
+		throw UserNotFound();
+
 	mem1.removeFriend(&mem2);
 }
 
 // a function that gets an index of a fanPage* and returns the element.
 // if the index isn't in range of the size of the vector throws an exception
-FanPage* Facebook::findFanPage(int index)
+FanPage* Facebook::findFanPage(int index)noexcept(false)
 {
+	if (index < 0 || index >= getNumOfPages())
+		throw IndexOutOfRange();
+
 	vector<FanPage*>::iterator itr = _fanPages.begin() + index;
 	return (*itr);
 	//exception
@@ -168,25 +187,40 @@ FanPage* Facebook::findFanPage(int index)
 
 // a function that gets an index of a fanPage* and returns the element.
 // if the index isn't in range of the size of the vector throws an exception
-Member* Facebook::findMember(int index)
+Member* Facebook::findMember(int index) noexcept(false)
 {
-	//exception
+	if (index < 0 || index >= getNumOfMembers())
+		throw IndexOutOfRange();
+
 	vector<Member*>::iterator itr = _members.begin() + index;
 	return (*itr);
 }
 
 // gets a ref to fanPage and Member and adds the member to be a fan of the page.
-void Facebook::addMemberToPage(FanPage& page, Member& member)
+void Facebook::addMemberToPage(FanPage& page, Member& member) noexcept(false)
 {
+	if (!findFanPage(page) || !findMember(member))
+		throw UserNotFound();
+
 	page.addFan(&member);
 }
 
 // gets a ref to status and member and adds the status to the member statuses.
-void Facebook::addStatusToMember(Member& member, Status& status)
+void Facebook::addStatusToMember(Member& member, Status& status)noexcept(false)
 {
-
-	//exception
+	if (findMember(member) == nullptr)
+		throw UserNotFound();
+    
 	member.addStatus(status);
+}
+
+// gets a ref to status and page and adds the status to the page statuses.
+void Facebook::addStatusToFanPage(FanPage& fanPage, Status& status)noexcept(false)
+{
+	if (findFanPage(fanPage) == nullptr)
+		throw UserNotFound();
+
+	fanPage.addStatus(status);
 }
 
 // gets two refs of members and make them friends
@@ -194,13 +228,16 @@ void Facebook::addStatusToMember(Member& member, Status& status)
 void Facebook::makeFriends(Member& member1, Member& member2) noexcept(false)
 {
 	if (member1.getMemberName() == member2.getMemberName())
-		throw AddingMemberToHimself();
+		throw MemberToHimself();
+	else if (!findMember(member1)|| !findMember(member2))
+		throw UserNotFound();
 	member1.addFriend(&member2);
 }
 
 
 FanPage* Facebook::findFanPage(FanPage& fanPage)
 {
+
 	vector<FanPage*>::iterator itr = _fanPages.begin();
 	vector<FanPage*>::iterator itrEnd = _fanPages.end();
 	vector<FanPage*>::iterator tmp = find(itr, itrEnd, &fanPage);
