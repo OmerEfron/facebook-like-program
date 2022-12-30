@@ -25,8 +25,7 @@ using namespace std;
 // display the system menu.
 void displayMenu()
 {
-	cout << "Welcome to FACEBOOK\n----------------------\nPlease choose one of the following:\n"
-		<< "1 - Add new member.\n2 - Add new fan page.\n3 - Add status to member.\n"
+	cout << "1 - Add new member.\n2 - Add new fan page.\n3 - Add status to member.\n"
 		<<"4 - Add status to fan page.\n5 - Show a member statuses.\n6 - Show a fan page statuses\n"
 		<<"7 - Show a member latest 10 statuses.\n8 - Create new friendship between two members.\n"
 		<<"9 - Cancel a friendship between 2 friends\n10 - Add a members as a fan to a fan page.\n"
@@ -193,6 +192,7 @@ void addStatusToPage(Facebook& facebook)
 	Status* newStatus = nullptr;
 	facebook.showPages(true);
 	cin >> choice;
+	getchar();
 	try
 	{
 		FanPage* fanPageChoice = facebook.findFanPage(choice - 1);
@@ -228,6 +228,7 @@ void addStatusToMember(Facebook& facebook)
 	Status* newStatus = nullptr;
 	facebook.showMembers(true);
 	cin >> choice;
+	getchar();
 	try
 	{
 		Member* memberChoice = facebook.findMember(choice - 1);
@@ -534,32 +535,53 @@ void showAll(Facebook& facebook)
 // gets a member and shows all of his friends
 void showMemberFriends(Facebook& facebook)
 {
-	int choice = checkInputMembers(facebook);
-	Member* memberP = facebook.findMember(choice - 1);
-	if (memberP->getNumOfFriends() > 0)
+	int choice;
+	facebook.showMembers(true);
+	if (facebook.getNumOfMembers() != 0)
 	{
-		memberP->showAllFriends(false);
-	}
-	else
-	{
-		cout << memberP->getMemberName() << " has no friends";
+		cout << "Please choose one member: ";
+		cin >> choice;
+		getchar();
+		try
+		{
+			Member* memberP = facebook.findMember(choice - 1);
+			facebook.showMemberFriend(*memberP);
+		}
+		catch (IndexOutOfRange& indOutOfR)
+		{
+			cout << indOutOfR.what()<<endl;
+		}
+		catch (UserNotFound& userNotFound)
+		{
+			cout << userNotFound.what() << endl;
+		}
 	}
 }
 
 // gets a page and shows all of his fans
 void showPageFans(Facebook& facebook)
 {
-	if (facebook.getNumOfPages() == 0)
+	int choice;
+	facebook.showPages(true);
+	if (facebook.getNumOfPages() != 0)
 	{
-		cout << "No Pages\n";
-		return;
+		cout << "Please choose one page: ";
+		cin >> choice;
+		getchar();
+		try
+		{
+			FanPage* fPage = facebook.findFanPage(choice - 1);
+			facebook.showPageFans(*fPage);
+		}
+		catch (IndexOutOfRange& indOutOfR)
+		{
+			cout << indOutOfR.what() << endl;
+		}
+		catch (UserNotFound& userNotFound)
+		{
+			cout << userNotFound.what() << endl;
+		}
 	}
-	int choice = checkInputFanPages(facebook);
-	FanPage* pageP = facebook.findFanPage(choice - 1);
-	if (pageP->getNumOfFans() == 0)
-		cout << "No fans";
-	else
-		pageP->showAllFans(false);
 }
 
 int checkInputMembers(Facebook& facebook)//

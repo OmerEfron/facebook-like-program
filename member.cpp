@@ -137,12 +137,15 @@ void Member::showAllFriends(bool withIndex) const
 {
 	vector<Member*>::const_iterator itr = _memberFriends.begin();
 	vector<Member*>::const_iterator itrEnd = _memberFriends.end();
-
-	if (withIndex) {
+	if (getNumOfFriends() == 0)
+		cout << _memberName << "Has no friends yet." <<endl;
+	else if (withIndex)
+	{
 		for (int i = 1; itr != itrEnd; ++itr, ++i)
 			cout << i << ". " << (*itr)->getMemberName() << "\n";
 	}
-	else {
+	else
+	{
 		for (; itr != itrEnd; ++itr)
 			cout << (*itr)->getMemberName() << "\n";
 	}

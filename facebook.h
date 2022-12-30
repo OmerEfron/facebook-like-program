@@ -38,7 +38,8 @@ public:
 	Member* findMember(int index) noexcept(false);
 	Member* findMember(Member& member);
 	void makeFriends(Member& member1, Member& member2) noexcept(false);
-	void showMemberFriend();
+	void showMemberFriend(Member& member) noexcept(false);
+	void showPageFans(FanPage& fPage) noexcept(false);
 
 };
 #endif // !FACEBOOK_H

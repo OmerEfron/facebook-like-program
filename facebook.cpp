@@ -258,3 +258,18 @@ Member* Facebook::findMember(Member& member)
 		return *tmp;
 	return nullptr;
 }
+
+void Facebook::showMemberFriend(Member& member) noexcept(false)
+{
+	if (!findMember(member))
+		throw UserNotFound();
+	member.showAllFriends(false);
+}
+
+
+void Facebook::showPageFans(FanPage& fPage) noexcept(false)
+{
+	if (!findFanPage(fPage))
+		throw UserNotFound();
+	fPage.showAllFans(false);
+}
