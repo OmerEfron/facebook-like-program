@@ -1,5 +1,6 @@
 #include "functions.h"
 #include "memberException.h"
+#include "dateException.h"
 #include <string.h>
 #include <string>
 #include <iostream>
@@ -136,9 +137,10 @@ void addNewMember(Facebook& facebook)
 	name = getString();
 	cout << "Please enter:\nDay Month Year, seperated with white space\n";
 	cin >> day >> month >> year;
-	Member* member = new Member(*name, Date(day, month, year));
+	Member* member = nullptr;
 	try
 	{
+		member = new Member(*name, Date(day, month, year));
 		facebook.addMember(*member);
 	}
 	catch (DuplicateNameException& dupName)
@@ -149,11 +151,24 @@ void addNewMember(Facebook& facebook)
 	{
 		cout << invDate.what();
 	}
+	catch (InvalidDayException& dayExc)
+	{
+		cout << dayExc.what() << endl;
+	}
+	catch (InvalidMonthException& monthExc)
+	{
+		cout << monthExc.what() << endl;
+	}
+	catch (InvalidYearException& yearExe)
+	{
+		cout << yearExe.what() << endl;
+	}
 	catch (...)
 	{
 		cout << "something wrong. try again";
 	}
-	delete member;
+	if(member)
+		delete member;
 	delete name;
 }
 

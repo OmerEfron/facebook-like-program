@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dateException.h" />
     <ClInclude Include="facebook.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="memberException.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="userException.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dateException.cpp" />
     <ClCompile Include="facebook.cpp" />
     <ClCompile Include="fanPage.cpp" />
     <ClCompile Include="functions.cpp" />

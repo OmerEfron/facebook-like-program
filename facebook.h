@@ -8,7 +8,7 @@
 #include <vector>
 
 
-
+const int MAX_AGE = 16;
 class Facebook {
 private:
 	std::vector<Member*> _members;

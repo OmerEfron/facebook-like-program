@@ -44,7 +44,7 @@ void Facebook::addMember(Member& newMember) noexcept(false)
 	{
 		throw DuplicateNameException(newMember.getMemberName());
 	}
-	else if (!(newMember.getMemberBirthDate().isValid()))
+	else if (!(newMember.getMemberBirthDate().isAboveAge(MAX_AGE)))
 	{
 		throw InvalidBirthDate();
 	}
