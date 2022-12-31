@@ -133,6 +133,8 @@ Date Member:: getMemberBirthDate() const
 	return _dateOfBirth;
 }
 
+// shows the member friends.
+// if withIndex == true, prints it with fixed indexes.
 void Member::showAllFriends(bool withIndex) const
 {
 	vector<Member*>::const_iterator itr = _memberFriends.begin();
@@ -151,6 +153,8 @@ void Member::showAllFriends(bool withIndex) const
 	}
 }
 
+// shows the fanpages the member is fan of.
+// if withIndex == true, prints it with fixed indexes.
 void Member::showAllFanpages(bool withIndex) const
 {
 	vector<FanPage*>::const_iterator itr = _memberFanPages.begin();

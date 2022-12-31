@@ -284,7 +284,6 @@ string* getString()
 // gets from user a page choice and shows all of his statuses.
 void showAllStastusOfPage(Facebook& facebook)
 {
-	/*int choice = checkInputFanPages(facebook);*/
 	int choice;
 	facebook.showPages(true);
 	if (facebook.getNumOfPages() != 0)
@@ -310,7 +309,6 @@ void showAllStastusOfPage(Facebook& facebook)
 // gets from user a member choice and shows all of his statuses.
 void showAllStatusOfMember(Facebook& facebook)
 {
-	/*int choice = checkInputMembers(facebook);*/
 	int choice;
 	facebook.showMembers(true);
 	if (facebook.getNumOfMembers() != 0)
@@ -336,7 +334,6 @@ void showAllStatusOfMember(Facebook& facebook)
 // gets from user a member choice and shows all of his friends 10 latest statuses.
 void showLatestStatusOfFriend(Facebook& facebook)
 {
-	/*int choice= checkInputMembers(facebook);*/
 	int choice;
 	facebook.showMembers(true);
 	if (facebook.getNumOfMembers() != 0)
@@ -395,7 +392,6 @@ void makeFriends(Facebook& facebook)
 // gets from user two members and remove them from being friends on facebook.
 void cancelFriendship(Facebook& facebook)
 {
-	/*int choice1 = checkInputMembers(facebook);*/
 
 	int choice1;
 	int choice2;
@@ -424,29 +420,14 @@ void cancelFriendship(Facebook& facebook)
 			cout << sameMember.removeMemberToHimself();
 		}
 	}
-	
-
-	//if (numOfMembers > 0)
-	//{
-	//	do {
-	//		cout << "Please choose the second member:\n";
-	//		member1->showAllFriends(true);
-	//		cin >> choice2;
-	//		getchar();
-	//	} while (choice2<1 || choice2>numOfMembers);
-	//	Member* member2 = facebook.findMember(choice2 - 1);
-	//	member1->removeFriend(member2);
-	//}
-	//else
-	//	cout << "No members";
 
 }
 // gets from the user a member and a page choice.
 // adds the member to be a fan of the fan page.
 void addMemberToPage(Facebook& facebook)
 {
-	int page; /*checkInputFanPages(facebook)*/
-	int member;/* = checkInputMembers(facebook)*/
+	int page; 
+	int member;
 	int numOfMembers = facebook.getNumOfMembers();
 	int numOfPages = facebook.getNumOfPages();
 	facebook.showMembers(true);
