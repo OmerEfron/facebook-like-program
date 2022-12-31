@@ -8,11 +8,13 @@ string DateException::what() const
 	return "Wrong date values. try again\n";
 }
 
+// init wrong day.
 InvalidDayException::InvalidDayException(int day)
 {
 	wrongDay = day;
 }
 
+// returns a string with a suitable message to to exception
 string InvalidDayException::what() const
 {
 	string msg = "day value can't be ";
@@ -25,6 +27,7 @@ InvalidMonthException::InvalidMonthException(int month)
 	wrongMonth = month;
 }
 
+// returns a string with a suitable message to to exception
 string InvalidMonthException::what() const
 {
 	string msg = "month value can't be ";
@@ -36,6 +39,8 @@ InvalidYearException::InvalidYearException(int year)
 {
 	wrongYear = year;
 }
+
+// returns a string with a suitable message to to exception
 string InvalidYearException::what() const
 {
 	string msg = "year value can't be ";
